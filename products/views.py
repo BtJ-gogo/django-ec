@@ -1,9 +1,10 @@
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from .models import Book
+from .models import Author, Book
 from .forms import AddCartForm
 
 
@@ -56,4 +57,24 @@ class BookDetailView(SearchRedirectMixin, DetailView):
         else:
             context["form"] = None
 
+        return context
+
+
+class AuthorDetailView(SearchRedirectMixin, DetailView):
+    model = Author
+    template_name = "author_detail.html"
+    context_object_name = "author"
+    paginate_by = 10
+    search_redirect_url_name = "products:book_list"
+
+    # get_context_data()で著作一覧を取得して表示するようにする
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        books = context["author"].book_set.all()
+        p = Paginator(books, self.paginate_by)
+
+        page_number = self.request.GET.get("page")
+        page = p.get_page(page_number)
+
+        context["books"] = page
         return context
