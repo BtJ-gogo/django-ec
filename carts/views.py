@@ -17,7 +17,7 @@ class AddCartView(View):
             quantity = int(self.request.POST.get("quantity"))
             try:
                 cart = Cart.objects.get(user=self.request.user, product=book)
-                if cart.quantity + quantity < book.stock:
+                if cart.quantity + quantity <= book.stock:
                     cart.quantity += quantity
                 else:
                     # messageいれる
@@ -42,6 +42,9 @@ class AddCartView(View):
 class CartListView(ListView):
     model = Cart
     template_name = "cart_list.html"
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         total = 0
