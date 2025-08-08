@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.name }}{% endblock %}
+
+{% block content %}
+<img src="{{ book.image.url }}" />
+<p>{{ book.name }}</p>
+<p><a href="{{ book.author.get_absolute_url }}">{{ book.author }}(著)</a></p>
+<p>{{ book.category }}</p>
+<p>${{ book.price }}</p>
+{% if form %}
+<form method="post" action="{% url "carts:add_cart" book.pk %}">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">カートに入れる</button>
+</form>
+{% else %}
+<p>現在在庫切れです。</p>
+{% endif %}
+<p>商品詳細</p>
+<p>著者: {{ book.author }}</p>
+<p>出版日: {{ book.publication_date }}</p>
+<p>出版社: {{ book.publisher }}</p>
+<p>{{ book.description }}</p>
+{% endblock %}
