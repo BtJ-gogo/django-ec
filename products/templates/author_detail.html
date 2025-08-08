@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<p>{{ author.name }}</p>
+{% if author.bio %}
+<p>著者紹介</p>
+<p>{{ author.bio }}</p>
+{% endif %}
+<p>ここに著作一覧表示</p>
+{% for book in books %}
+<a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" /></a>
+<li><a href="{{ book.get_absolute_url }}">{{ book.name }}</a></li>
+<p>{{ book.author }}</p>
+<p>{{ book.category }}</p>
+<p>${{ book.price }}</p>
+{% endfor %}
+
+<p>pagination</p>
+<div class="pagination">
+    <span>
+        Page {{ books.number }} of {{ books.paginator.num_pages }}
+    </span>
+</div>
+{% endblock %}
