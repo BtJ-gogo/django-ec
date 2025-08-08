@@ -1,9 +1,10 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse
 
 from .models import Book
+from .forms import AddCartForm
 
 
 class SearchMixin:
@@ -39,3 +40,20 @@ class BookListView(SearchMixin, ListView):
     model = Book
     template_name = "book_list.html"
     paginate_by = 20
+
+
+class BookDetailView(SearchRedirectMixin, DetailView):
+    model = Book
+    template_name = "book_detail.html"
+    context_object_name = "book"
+    search_redirect_url_name = "products:book_list"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.object.stock > 0:
+            form = AddCartForm(stock=self.object.stock)
+            context["form"] = form
+        else:
+            context["form"] = None
+
+        return context
