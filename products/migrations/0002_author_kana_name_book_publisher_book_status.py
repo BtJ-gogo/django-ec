@@ -6,24 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('products', '0001_initial'),
+        ("products", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='author',
-            name='kana_name',
+            model_name="author",
+            name="kana_name",
             field=models.CharField(blank=True, max_length=50),
         ),
         migrations.AddField(
-            model_name='book',
-            name='publisher',
-            field=models.CharField(default='', max_length=50),
+            model_name="book",
+            name="publisher",
+            field=models.CharField(default="", max_length=50),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='book',
-            name='status',
-            field=models.CharField(choices=[('AC', 'Active'), ('DR', 'Draft'), ('DE', 'Delete')], default='DR', max_length=2),
+            model_name="book",
+            name="status",
+            field=models.CharField(
+                choices=[("AC", "Active"), ("DR", "Draft"), ("DE", "Delete")],
+                default="DR",
+                max_length=2,
+            ),
         ),
     ]

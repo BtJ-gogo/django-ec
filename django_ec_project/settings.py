@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "allauth.account",
     # local
     "products",
+    "carts",
 ]
 
 # django-allauth config
