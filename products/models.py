@@ -21,14 +21,21 @@ class Author(models.Model):
 
 
 class Book(models.Model):
+    class Status(models.TextChoices):
+        ACTIVE = "AC", "Active"
+        DRAFT = "DR", "Draft"
+        DELETE = "DE", "Delete"
+
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200)
-    publication_date = models.DateField()
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+    publisher = models.CharField(max_length=50)
+    publication_date = models.DateField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="book_image/")
     stock = models.PositiveSmallIntegerField()
+    status = models.CharField(max_length=2, choices=Status, default=Status.DRAFT)
 
     def __str__(self):
         return self.name
