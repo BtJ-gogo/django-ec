@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Book List{% endblock %}
+
+{% block content %}
+<ul>
+    {% for book in object_list %}
+    <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" /></a>
+    <li><a href="{{ book.get_absolute_url }}">{{ book.name }}</a></li>
+    <p>{{ book.author }}</p>
+    <p>{{ book.category }}</p>
+    <p>${{ book.price }}</p>
+    {% endfor %}
+</ul>
+<p>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>
+{% endblock %}
