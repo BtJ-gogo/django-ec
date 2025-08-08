@@ -7,7 +7,20 @@
     </head>
     <body>
         <div id="header">
-            <span class="logo">Django EC Site</span>
+            <span class="logo"><a href="{% url "products:book_list" %}">Django EC Site</a></span>
+            <form method="get">
+                <input type="text" name="search" value="{{ request.GET.search }}" />
+                <button type="submit">キーワード検索</button>
+            </form>
+            <a href="{% url "carts:cart" %}">買い物かご</a>
+            <a href="{% url "carts:cart" %}">お気に入り</a>
+            <a href="{% url "carts:cart" %}">購入履歴</a>
+            <a href="{% url "carts:cart" %}">マイページ</a>
+            {% if user.is_authenticated %}
+            <a href="{% url "account_logout" %}">ログアウト</a>
+            {% else %}
+            <a href="{% url "account_login" %}">ログイン</a>
+            {% endif %}
         </div>
         <div id="content">
             {% block content %}
