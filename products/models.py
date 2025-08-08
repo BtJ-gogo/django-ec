@@ -15,7 +15,7 @@ class Author(models.Model):
     bio = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.name}({self.birth_date.strftime('%Y/%m/%d')})"
+        return self.name
 
 
 class Book(models.Model):
@@ -29,4 +29,4 @@ class Book(models.Model):
     stock = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return f"{self.name} {self.author} {self.publication_date}"
+        return self.name
