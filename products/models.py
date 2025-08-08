@@ -36,7 +36,6 @@ class Book(models.Model):
     publisher = models.CharField(max_length=50)
     publication_date = models.DateField()
     price = models.IntegerField()
-    # price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="book_image/")
     stock = models.PositiveSmallIntegerField()
