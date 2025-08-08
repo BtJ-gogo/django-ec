@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}カート{% endblock %}
+
+{% block content %}
+{% for item in object_list %}
+<p>{{ item.product.name }} {{ item.product.price }} {{ item.quantity }}</p>
+<form method="post" action="{% url "carts:delete_cart" item.id %}">
+    {% csrf_token %}
+    <button type="submit">削除</button>
+</form>
+{% empty %}
+<p>商品が入っていません</p>
+<p><a href="{% url "products:book_list" %}">トップへ</a></p>
+{% endfor %}
+
+{% if total %}
+<p>合計金額</p>
+<p>{{ total }}</p>
+{% endif %}
+{% endblock %}
