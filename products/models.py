@@ -11,6 +11,8 @@ class Category(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
+    kana_name = models.CharField(max_length=50, blank=True)
+    # romaji_name = models.CharField(max_length=50)
     birth_date = models.DateField()
     bio = models.TextField(blank=True)
 
