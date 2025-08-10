@@ -17,5 +17,6 @@
 {% if total %}
 <p>合計金額</p>
 <p>{{ total }}</p>
+<a href="{% url "orders:order" %}">購入手続きへ</a>
 {% endif %}
 {% endblock %}
