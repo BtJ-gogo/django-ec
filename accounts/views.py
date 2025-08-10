@@ -1,5 +1,5 @@
 from django.views.generic import ListView, TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 
 from .models import ShippingAddress
@@ -24,3 +24,10 @@ class ShippingAddressAddView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class ShippingAddressUpdateView(UpdateView):
+    model = ShippingAddress
+    template_name = "shipping_address_update.html"
+    form_class = ShippingAddressForm
+    success_url = reverse_lazy("accounts:shipping")
