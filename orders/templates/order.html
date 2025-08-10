@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+</form>
+<p>商品一覧</p>
+{% for book in object_list %}
+<p>{{book.product.name}}</p>
+{% endfor %}
+<p>注文詳細</p>
+<p>{{ total }}円</p>
+<button>注文を確定する</button>
+{% endblock %}
