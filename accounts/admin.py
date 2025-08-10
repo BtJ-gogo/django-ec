@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser
+from .models import CustomUser, ShippingAddress
 
 
 # Register your models here.
@@ -24,3 +24,8 @@ class CustomUserAdmin(admin.ModelAdmin):
         "last_name",
         "email",
     )
+
+
+@admin.register(ShippingAddress)
+class ShippingAdressAdmin(admin.ModelAdmin):
+    pass
