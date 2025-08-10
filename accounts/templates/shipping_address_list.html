@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-<a href="">新規住所を追加</a>
+<a href="{% url "accounts:shipping_add" %}">新規住所を追加</a>
 {% for address in object_list %}
 <p>{{ address.first_name }}</p>
 {% empty %}
