@@ -25,6 +25,15 @@ class ShippingAddressAddView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+
+        if not ShippingAddress.objects.filter(user=self.request.user).exists():
+            form.instance.is_default = True
+
+        if form.instance.is_default:
+            ShippingAddress.objects.filter(
+                user=self.request.user, is_default=True
+            ).update(is_default=False)
+
         return super().form_valid(form)
 
 
