@@ -17,4 +17,5 @@ class ShippingAddressForm(forms.ModelForm):
             "city",
             "address1",
             "address2",
+            "is_default",
         ]
