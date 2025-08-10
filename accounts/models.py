@@ -68,4 +68,4 @@ class ShippingAddress(models.Model):
     state = models.CharField(max_length=2, choices=State.choices)
     city = models.CharField(max_length=30)
     address1 = models.CharField(max_length=50)
-    address2 = models.CharField(max_length=50)
+    address2 = models.CharField(max_length=50, blank=True)
