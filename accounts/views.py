@@ -43,6 +43,14 @@ class ShippingAddressUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ShippingAddressForm
     success_url = reverse_lazy("accounts:shipping")
 
+    def form_valid(self, form):
+        if form.instance.is_default:
+            ShippingAddress.objects.filter(
+                user=self.request.user, is_default=True
+            ).update(is_default=False)
+
+        return super().form_valid(form)
+
 
 class ShippingAddressDeleteView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
