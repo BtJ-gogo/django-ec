@@ -59,8 +59,10 @@ class ShippingAddress(models.Model):
         OKINAWA = "47", "沖縄県"
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    first_kana_name = models.CharField(max_length=50)
+    last_kana_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=11)
     zipcode = models.CharField(max_length=8)
     state = models.CharField(max_length=2, choices=State.choices)
