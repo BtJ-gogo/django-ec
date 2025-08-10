@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<a href="">新規住所を追加</a>
+{% for address in object_list %}
+<p>{{ address.first_name }}</p>
+{% empty %}
+{% endfor %}
+{% endblock %}
