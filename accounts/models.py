@@ -69,4 +69,4 @@ class ShippingAddress(models.Model):
     city = models.CharField(max_length=30)
     address1 = models.CharField(max_length=50)
     address2 = models.CharField(max_length=50, blank=True)
-    is_default = models.BooleanField(default=True)
+    is_default = models.BooleanField(default=False)
