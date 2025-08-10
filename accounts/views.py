@@ -1,4 +1,5 @@
-from django.views.generic import ListView, TemplateView
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import ListView, TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 
@@ -31,3 +32,13 @@ class ShippingAddressUpdateView(UpdateView):
     template_name = "shipping_address_update.html"
     form_class = ShippingAddressForm
     success_url = reverse_lazy("accounts:shipping")
+
+
+class ShippingAddressDeleteView(View):
+    def post(self, request, *args, **kwargs):
+        obj = get_object_or_404(
+            ShippingAddress, user=self.request.user, id=kwargs.get("pk")
+        )
+        print(obj.last_name)
+        obj.delete()
+        return redirect("accounts:shipping")

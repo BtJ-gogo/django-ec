@@ -5,6 +5,7 @@ from .views import (
     ShippingAddressView,
     ShippingAddressAddView,
     ShippingAddressUpdateView,
+    ShippingAddressDeleteView,
 )
 
 app_name = "accounts"
@@ -15,6 +16,11 @@ urlpatterns = [
         "shipping/update/<int:pk>",
         ShippingAddressUpdateView.as_view(),
         name="shipping_update",
+    ),
+    path(
+        "shipping/delete/<int:pk>/",
+        ShippingAddressDeleteView.as_view(),
+        name="shipping_delete",
     ),
     path("shipping/", ShippingAddressView.as_view(), name="shipping"),
     path("", MypageView.as_view(), name="mypage"),
