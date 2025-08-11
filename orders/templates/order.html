@@ -3,15 +3,24 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-</form>
-<p>商品一覧</p>
-{% for book in object_list %}
+<p>---配送先住所---</p>
+<p>{{ address.last_name }} {{ address.first_name }}</p>
+<p>{{ address.zipcode }} {{ address.get_state_display }} {{ address.city }} {{ address.address1 }}</p>
+{% if address.address2 %}
+<p>{{ address.address2 }}</p>
+{% endif %}
+<p>{{ address.phone }}</p>
+<a href="{% url "orders:address_select" %}">変更</a>
+<p>---支払い方法？---</p>
+<p>---商品一覧---</p>
+{% for book in cart_list %}
 <p>{{book.product.name}}</p>
 {% endfor %}
-<p>注文詳細</p>
+<p>---注文詳細---</p>
+<p>合計金額</p>
 <p>{{ total }}円</p>
-<button>注文を確定する</button>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">注文を確定する</button>
+</form>
 {% endblock %}
