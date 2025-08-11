@@ -36,6 +36,12 @@ class ShippingAddressAddView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+    def get_success_url(self):
+        next_url = self.request.GET.get("next")
+        if next_url:
+            return next_url
+        return super().get_success_url()
+
 
 class ShippingAddressUpdateView(LoginRequiredMixin, UpdateView):
     model = ShippingAddress
