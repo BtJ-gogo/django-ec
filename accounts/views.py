@@ -57,6 +57,5 @@ class ShippingAddressDeleteView(LoginRequiredMixin, View):
         obj = get_object_or_404(
             ShippingAddress, user=self.request.user, id=kwargs.get("pk")
         )
-        print(obj.last_name)
         obj.delete()
         return redirect("accounts:shipping")
