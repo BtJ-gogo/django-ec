@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.http import url_has_allowed_host_and_scheme
 
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
@@ -38,7 +39,9 @@ class ShippingAddressAddView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         next_url = self.request.GET.get("next")
-        if next_url:
+        if next_url and url_has_allowed_host_and_scheme(
+            url=next_url, allowed_hosts=self.request.get_host()
+        ):
             return next_url
         return super().get_success_url()
 

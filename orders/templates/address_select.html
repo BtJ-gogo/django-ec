@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% for address in address_list %}
+    {% if address.is_default %}
+    <input type="radio" name="address" value="{{ address.pk }}" checked>
+    {% else %}
+    <input type="radio" name="address" value="{{ address.pk }}">
+    {% endif %}
+    <p>{{ address.last_name }} {{ address.first_name }}</p>
+    <p>{{ address.zipcode }} {{ address.get_state_display }} {{ address.city }} {{ address.address1 }}</p>
+    {% if address.address2 %}
+    <p>{{ address.address2 }}</p>
+    {% endif %}
+    <p>{{ address.phone }}</p>
+    {% endfor %}
+    <button type="submit">この住所を使用</button>
+</form>
+{% endblock %}

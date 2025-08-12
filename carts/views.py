@@ -44,7 +44,7 @@ class CartListView(ListView):
     template_name = "cart_list.html"
 
     def get_queryset(self):
-        return Cart.objects.filter(user=self.request.user)
+        return Cart.objects.filter(user=self.request.user).prefetch_related("product")
 
     def get_context_data(self, **kwargs):
         total = 0
