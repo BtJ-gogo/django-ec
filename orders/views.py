@@ -6,9 +6,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 from accounts.models import ShippingAddress
 from carts.models import Cart
+from .models import Order, OrderItem
 
 
 # create the Stripe instance
@@ -19,7 +22,6 @@ class OrderView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         # 配送先
         address_id = self.request.session.get("selected_address_id", None)
-        print(address_id)
         if address_id:
             address = get_object_or_404(
                 ShippingAddress, user=self.request.user, id=address_id
@@ -77,7 +79,38 @@ class OrderView(LoginRequiredMixin, View):
                     "quantity": cart.quantity,
                 }
             )
+        # Create Order
+        address_id = self.request.session.get("selected_address_id", None)
+        if address_id:
+            address = get_object_or_404(
+                ShippingAddress, user=self.request.user, id=address_id
+            )
+        else:
+            address = get_object_or_404(
+                ShippingAddress, user=self.request.user, is_default=True
+            )
+        order = Order.objects.create(
+            user=self.request.user,
+            name=address.last_name + " " + address.first_name,
+            email=address.user.email,
+            phone=address.phone,
+            zipcode=address.zipcode,
+            state=address.get_state_display(),
+            city=address.city,
+            address1=address.address1,
+            address2=address.address2,
+        )
+        # Product Info to OrderItem
+        for cart in cart_list:
+            OrderItem.objects.create(
+                order=order,
+                product=cart.product,
+                price=cart.product.price,
+                quantity=cart.quantity,
+            )
+        session_data["client_reference_id"] = str(order.id)
         session = stripe.checkout.Session.create(**session_data)
+
         return redirect(session.url)
 
 
@@ -109,3 +142,34 @@ class OrderCompletedView(TemplateView):
 
 class OrderCanceledView(TemplateView):
     template_name = "order_canceled.html"
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
+    event = None
+    try:
+        event = stripe.Webhook.construct_event(
+            payload,
+            sig_header,
+            settings.STRIPE_WEBHOOK_SECRET,
+        )
+    except ValueError as e:
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        return HttpResponse(status=400)
+    if event.type == "checkout.session.completed":
+        session = event.data.object
+        if session.mode == "payment" and session.payment_status == "paid":
+            try:
+                order = Order.objects.get(id=session.client_reference_id)
+            except Order.DoesNotExist:
+                return HttpResponse(status=404)
+            order.status = "PA"
+            order.stripe_id = session.payment_intent
+            order.save()
+            Cart.objects.filter(user=order.user).delete()
+            request.session.pop("selected_address_id", None)
+
+    return HttpResponse(status=200)
