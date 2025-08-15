@@ -42,3 +42,6 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     price = models.PositiveIntegerField()
     quantity = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
+
+    def get_total_price(self):
+        return self.price * self.quantity

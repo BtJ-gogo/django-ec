@@ -1,5 +1,6 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, TemplateView, View
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +8,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
-from orders.models import Order
+from orders.models import Order, OrderItem
 
 
 class MypageView(LoginRequiredMixin, TemplateView):
@@ -76,4 +77,16 @@ class OrderHistoryView(ListView):
     template_name = "order_history.html"
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        return Order.objects.filter(user=self.request.user).exclude(payment_status="PE")
+
+
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = "order_detail.html"
+
+    def get_queryset(self):
+        return (
+            Order.objects.filter(user=self.request.user)
+            .exclude(payment_status="PE")
+            .prefetch_related("orderitem_set")
+        )

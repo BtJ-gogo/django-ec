@@ -4,7 +4,7 @@
 
 {% block content %}
 {% for order in object_list %}
-<p>{{ order.date }}</p>
+<p>{{order.id}} {{ order.date }} {{ order.total_price }}円 {{ order.get_payment_status_display }} {{order.get_shipping_status_display}} <a href="{% url 'accounts:order_detail' order.id %}">詳細</a></p>
 {% empty %}
 <p>注文履歴はありません。</p>
 {% endfor %}
