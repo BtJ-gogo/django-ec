@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Cart
 from products.models import Book
+from products.views import SearchRedirectMixin
 
 
 class AddCartView(View):
@@ -55,7 +56,7 @@ class CartListView(ListView):
         return context
 
 
-class CartView(View):
+class CartView(SearchRedirectMixin, View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             view = CartListView.as_view()
