@@ -4,6 +4,12 @@
 
 {% block content %}
 {% for product in object_list %}
-<p>{{ product.name }} - {{ product.price }}円</p>
+<p>イメージ {{ product.product.name }} - {{ product.product.price }}円</p>
+<form method="post" action="{% url 'accounts:favorite_delete' product.product.pk %}">
+    {% csrf_token %}
+    <button type="submit">お気に入りから削除</button>
+</form>
+{% empty %}
+<p>お気に入りの商品はありません。</p>
 {% endfor %}
 {% endblock %}

@@ -98,3 +98,12 @@ class FavoriteListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Favorite.objects.filter(user=self.request.user).select_related("product")
+
+
+class FavoriteDeleteView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        result = get_object_or_404(
+            Favorite, user=self.request.user, product_id=kwargs.get("pk")
+        )
+        result.delete()
+        return redirect("accounts:favorite_list")
