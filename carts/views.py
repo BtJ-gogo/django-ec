@@ -74,5 +74,9 @@ class CartView(SearchRedirectMixin, View):
 def item_delete(request, pk):
     if request.user.is_authenticated:
         cart = Cart.objects.filter(user=request.user, id=pk)
-        cart.delete()
-        return redirect("carts:cart")
+        if cart.exists():
+            cart.delete()
+            return redirect("carts:cart")
+        else:
+            messages.warning(request, "カートのアイテムが見つかりませんでした。")
+            return redirect("carts:cart")
