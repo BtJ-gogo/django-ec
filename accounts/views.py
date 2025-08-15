@@ -19,6 +19,9 @@ class ShippingAddressView(LoginRequiredMixin, ListView):
     model = ShippingAddress
     template_name = "shipping_address_list.html"
 
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)
+
 
 class ShippingAddressAddView(LoginRequiredMixin, CreateView):
     model = ShippingAddress
@@ -53,6 +56,9 @@ class ShippingAddressUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "shipping_address_update.html"
     form_class = ShippingAddressForm
     success_url = reverse_lazy("accounts:shipping")
+
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
         if form.instance.is_default:
