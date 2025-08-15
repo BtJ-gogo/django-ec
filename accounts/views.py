@@ -72,7 +72,7 @@ class ShippingAddressDeleteView(LoginRequiredMixin, View):
         return redirect("accounts:shipping")
 
 
-class OrderHistoryView(ListView):
+class OrderHistoryView(LoginRequiredMixin, ListView):
     model = Order
     template_name = "order_history.html"
 
@@ -80,7 +80,7 @@ class OrderHistoryView(ListView):
         return Order.objects.filter(user=self.request.user).exclude(payment_status="PE")
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "order_detail.html"
 
@@ -92,7 +92,7 @@ class OrderDetailView(DetailView):
         )
 
 
-class FavoriteListView(ListView):
+class FavoriteListView(LoginRequiredMixin, ListView):
     model = Favorite
     template_name = "favorite_list.html"
 
