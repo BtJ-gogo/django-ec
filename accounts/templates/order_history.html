@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}注文履歴{% endblock %}
+
+{% block content %}
+{% for order in object_list %}
+<p>{{ order.date }}</p>
+{% empty %}
+<p>注文履歴はありません。</p>
+{% endfor %}
+{% endblock %}

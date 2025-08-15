@@ -7,6 +7,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 
 from .models import ShippingAddress
 from .forms import ShippingAddressForm
+from orders.models import Order
 
 
 class MypageView(LoginRequiredMixin, TemplateView):
@@ -68,3 +69,11 @@ class ShippingAddressDeleteView(LoginRequiredMixin, View):
         )
         obj.delete()
         return redirect("accounts:shipping")
+
+
+class OrderHistoryView(ListView):
+    model = Order
+    template_name = "order_history.html"
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
