@@ -22,4 +22,8 @@
 <p>出版日: {{ book.publication_date }}</p>
 <p>出版社: {{ book.publisher }}</p>
 <p>{{ book.description }}</p>
+<form method="post" action="{% url 'products:favorite_toggle' book.pk %}">
+    {% csrf_token %}
+    <button type="submit">お気に入りに追加</button>
+</form>
 {% endblock %}

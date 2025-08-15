@@ -1,10 +1,12 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse
 
 from .models import Author, Book
+from accounts.models import Favorite
 from .forms import AddCartForm
 
 
@@ -78,3 +80,14 @@ class AuthorDetailView(SearchRedirectMixin, DetailView):
 
         context["books"] = page
         return context
+
+
+class FavoriteToggleView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        result, created = Favorite.objects.get_or_create(
+            user=self.request.user, product_id=kwargs.get("pk")
+        )
+        if not created:
+            result.delete()
+
+        return redirect("products:book_detail", pk=kwargs.get("pk"))
