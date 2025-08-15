@@ -8,13 +8,18 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Cart
 from products.models import Book
+from products.views import SearchRedirectMixin
 
 
 class AddCartView(View):
     def post(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
             book = get_object_or_404(Book, id=kwargs.get("pk"))
-            quantity = int(self.request.POST.get("quantity"))
+            try:
+                quantity = int(self.request.POST.get("quantity"))
+            except (ValueError, TypeError):
+                quantity = 1
+
             try:
                 cart = Cart.objects.get(user=self.request.user, product=book)
                 if cart.quantity + quantity <= book.stock:
@@ -55,7 +60,7 @@ class CartListView(ListView):
         return context
 
 
-class CartView(View):
+class CartView(SearchRedirectMixin, View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             view = CartListView.as_view()
