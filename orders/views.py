@@ -166,7 +166,7 @@ def stripe_webhook(request):
                 order = Order.objects.get(id=session.client_reference_id)
             except Order.DoesNotExist:
                 return HttpResponse(status=404)
-            order.status = "PA"
+            order.payment_status = "PA"
             order.stripe_id = session.payment_intent
             order.save()
             Cart.objects.filter(user=order.user).delete()
