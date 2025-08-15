@@ -24,6 +24,10 @@
 <p>{{ book.description }}</p>
 <form method="post" action="{% url 'products:favorite_toggle' book.pk %}">
     {% csrf_token %}
+    {% if favorite %}
+    <button type="submit">お気に入りから削除</button>
+    {% else %}
     <button type="submit">お気に入りに追加</button>
+    {% endif %}
 </form>
 {% endblock %}

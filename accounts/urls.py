@@ -8,11 +8,15 @@ from .views import (
     ShippingAddressDeleteView,
     OrderHistoryView,
     OrderDetailView,
+    FavoriteListView,
+    FavoriteDeleteView,
 )
 
 app_name = "accounts"
 
 urlpatterns = [
+    path("favorite/", FavoriteListView.as_view(), name="favorite_list"),
+    path("favorite/<int:pk>/", FavoriteDeleteView.as_view(), name="favorite_delete"),
     path("order/history/", OrderHistoryView.as_view(), name="order_history"),
     path("order/history/<int:pk>/", OrderDetailView.as_view(), name="order_detail"),
     path("shipping/", ShippingAddressView.as_view(), name="shipping"),

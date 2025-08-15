@@ -59,6 +59,10 @@ class BookDetailView(SearchRedirectMixin, DetailView):
         else:
             context["form"] = None
 
+        favorite = self.object.favorite_set.filter(user=self.request.user).exists()
+        print(favorite)
+        context["favorite"] = favorite
+
         return context
 
 
