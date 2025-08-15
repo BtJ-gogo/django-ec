@@ -6,16 +6,25 @@ from products.models import Book
 
 
 class Order(models.Model):
-    class Status(models.TextChoices):
+    class PaymentStatus(models.TextChoices):
         PENDING = "PE", "Pending"
-        UNPAID = "UN", "Unpaid"
         PAID = "PA", "Paid"
+        FAILED = "FA", "Failed"
+        REFUNDED = "RE", "Refunded"
+
+    class ShippingStatus(models.TextChoices):
+        PENDING = "PE", "Pending"
         SHIPPED = "SH", "Shipped"
         DELIVERED = "DE", "Delivered"
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
-    status = models.CharField(max_length=2, choices=Status, default=Status.PENDING)
+    payment_status = models.CharField(
+        max_length=2, choices=PaymentStatus.choices, default=PaymentStatus.PENDING
+    )
+    shipping_status = models.CharField(
+        max_length=2, choices=ShippingStatus.choices, default=ShippingStatus.PENDING
+    )
     name = models.CharField(max_length=50)
     email = models.EmailField()
     phone = models.CharField(max_length=11)
