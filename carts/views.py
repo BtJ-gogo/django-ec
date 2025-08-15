@@ -52,10 +52,10 @@ class CartListView(ListView):
         return Cart.objects.filter(user=self.request.user).prefetch_related("product")
 
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         total = 0
         for row in self.object_list:
             total += row.get_total_price()
-        context = super().get_context_data(**kwargs)
         context["total"] = total
         return context
 
