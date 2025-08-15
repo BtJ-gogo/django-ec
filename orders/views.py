@@ -12,13 +12,14 @@ from django.http import HttpResponse
 from accounts.models import ShippingAddress
 from carts.models import Cart
 from .models import Order, OrderItem
+from products.views import SearchRedirectMixin
 
 
 # create the Stripe instance
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class OrderView(LoginRequiredMixin, View):
+class OrderView(LoginRequiredMixin, SearchRedirectMixin, View):
     def get(self, request, *args, **kwargs):
         # 配送先
         address_id = self.request.session.get("selected_address_id", None)
@@ -43,8 +44,7 @@ class OrderView(LoginRequiredMixin, View):
         total = 0
         for row in cart_list:
             total += row.get_total_price()
-        # del self.request.session["selected_address_id"]
-        # クレジットカード
+
         return render(
             request,
             "order.html",
@@ -115,7 +115,7 @@ class OrderView(LoginRequiredMixin, View):
         return redirect(session.url)
 
 
-class AddressSelectView(LoginRequiredMixin, View):
+class AddressSelectView(LoginRequiredMixin, SearchRedirectMixin, View):
     def get(self, request, *args, **kwargs):
         address_list = ShippingAddress.objects.filter(user=self.request.user)
 
@@ -137,11 +137,11 @@ class AddressSelectView(LoginRequiredMixin, View):
         return redirect(reverse("orders:order"))
 
 
-class OrderCompletedView(TemplateView):
+class OrderCompletedView(SearchRedirectMixin, TemplateView):
     template_name = "order_completed.html"
 
 
-class OrderCanceledView(TemplateView):
+class OrderCanceledView(SearchRedirectMixin, TemplateView):
     template_name = "order_canceled.html"
 
 
