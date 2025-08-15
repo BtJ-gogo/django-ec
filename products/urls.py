@@ -1,11 +1,12 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from .views import AuthorDetailView, BookListView, BookDetailView
+from .views import AuthorDetailView, BookListView, BookDetailView, FavoriteToggleView
 
 app_name = "products"
 
 urlpatterns = [
+    path("favorite/<int:pk>/", FavoriteToggleView.as_view(), name="favorite_toggle"),
     path("author/<int:pk>/", AuthorDetailView.as_view(), name="author_detail"),
     path("books/<int:pk>/", BookDetailView.as_view(), name="book_detail"),
     path("books/", BookListView.as_view(), name="book_list"),
