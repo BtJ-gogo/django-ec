@@ -33,6 +33,7 @@ class Order(models.Model):
     city = models.CharField(max_length=30)
     address1 = models.CharField(max_length=50)
     address2 = models.CharField(max_length=50, blank=True)
+    total_price = models.PositiveIntegerField()
     stripe_id = models.CharField(max_length=250, blank=True)
 
 
