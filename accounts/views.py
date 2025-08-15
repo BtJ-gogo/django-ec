@@ -9,18 +9,22 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from .models import ShippingAddress, Favorite
 from .forms import ShippingAddressForm
 from orders.models import Order
+from products.views import SearchRedirectMixin
 
 
-class MypageView(LoginRequiredMixin, TemplateView):
+class MypageView(LoginRequiredMixin, SearchRedirectMixin, TemplateView):
     template_name = "mypage.html"
 
 
-class ShippingAddressView(LoginRequiredMixin, ListView):
+class ShippingAddressView(LoginRequiredMixin, SearchRedirectMixin, ListView):
     model = ShippingAddress
     template_name = "shipping_address_list.html"
 
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)
 
-class ShippingAddressAddView(LoginRequiredMixin, CreateView):
+
+class ShippingAddressAddView(LoginRequiredMixin, SearchRedirectMixin, CreateView):
     model = ShippingAddress
     template_name = "shipping_address_add.html"
     form_class = ShippingAddressForm
@@ -48,11 +52,14 @@ class ShippingAddressAddView(LoginRequiredMixin, CreateView):
         return super().get_success_url()
 
 
-class ShippingAddressUpdateView(LoginRequiredMixin, UpdateView):
+class ShippingAddressUpdateView(LoginRequiredMixin, SearchRedirectMixin, UpdateView):
     model = ShippingAddress
     template_name = "shipping_address_update.html"
     form_class = ShippingAddressForm
     success_url = reverse_lazy("accounts:shipping")
+
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
         if form.instance.is_default:
@@ -72,7 +79,7 @@ class ShippingAddressDeleteView(LoginRequiredMixin, View):
         return redirect("accounts:shipping")
 
 
-class OrderHistoryView(LoginRequiredMixin, ListView):
+class OrderHistoryView(LoginRequiredMixin, SearchRedirectMixin, ListView):
     model = Order
     template_name = "order_history.html"
 
@@ -80,7 +87,7 @@ class OrderHistoryView(LoginRequiredMixin, ListView):
         return Order.objects.filter(user=self.request.user).exclude(payment_status="PE")
 
 
-class OrderDetailView(LoginRequiredMixin, DetailView):
+class OrderDetailView(LoginRequiredMixin, SearchRedirectMixin, DetailView):
     model = Order
     template_name = "order_detail.html"
 
@@ -92,7 +99,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
         )
 
 
-class FavoriteListView(LoginRequiredMixin, ListView):
+class FavoriteListView(LoginRequiredMixin, SearchRedirectMixin, ListView):
     model = Favorite
     template_name = "favorite_list.html"
 

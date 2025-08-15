@@ -27,7 +27,7 @@ class SearchMixin:
 
 class SearchRedirectMixin:
     search_param = "search"
-    search_redirect_url_name = None
+    search_redirect_url_name = "products:book_list"
 
     def dispatch(self, request, *args, **kwargs):
         search = request.GET.get(self.search_param)
