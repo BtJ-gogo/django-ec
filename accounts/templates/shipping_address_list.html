@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<a href="{% url "accounts:shipping_add" %}">新規住所を追加</a>
+{% for address in object_list %}
+{% if address.is_default %}
+<p>デフォルト</p>
+{% endif %}
+<p>{{ address.first_name }}</p>
+<a href="{% url "accounts:shipping_update" address.id %}">編集</a>
+<form method="post" action="{% url "accounts:shipping_delete" address.id %}">
+    {% csrf_token %}
+    <button type="submit">削除</button>
+</form>
+{% empty %}
+{% endfor %}
+{% endblock %}

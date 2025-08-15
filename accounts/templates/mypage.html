@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<a href="{% url "accounts:shipping" %}">配送先住所</a>
+<a href="{% url "accounts:order_history" %}">注文履歴</a>
+{% endblock %}
