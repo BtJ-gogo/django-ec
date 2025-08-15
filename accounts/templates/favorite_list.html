@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}お気に入りリスト{% endblock %}
+
+{% block content %}
+{% for product in object_list %}
+<p>{{ product.name }} - {{ product.price }}円</p>
+{% endfor %}
+{% endblock %}

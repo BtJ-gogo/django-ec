@@ -6,9 +6,9 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.http import url_has_allowed_host_and_scheme
 
-from .models import ShippingAddress
+from .models import ShippingAddress, Favorite
 from .forms import ShippingAddressForm
-from orders.models import Order, OrderItem
+from orders.models import Order
 
 
 class MypageView(LoginRequiredMixin, TemplateView):
@@ -90,3 +90,11 @@ class OrderDetailView(DetailView):
             .exclude(payment_status="PE")
             .prefetch_related("orderitem_set")
         )
+
+
+class FavoriteListView(ListView):
+    model = Favorite
+    template_name = "favorite_list.html"
+
+    def get_queryset(self):
+        return Favorite.objects.filter(user=self.request.user).select_related("product")

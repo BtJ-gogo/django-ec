@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
 
+from products.models import Book
+
 
 # Create your models here.
 class CustomUser(AbstractUser):
@@ -70,3 +72,9 @@ class ShippingAddress(models.Model):
     address1 = models.CharField(max_length=50)
     address2 = models.CharField(max_length=50, blank=True)
     is_default = models.BooleanField(default=False)
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Book, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
