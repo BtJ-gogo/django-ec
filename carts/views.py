@@ -15,7 +15,11 @@ class AddCartView(View):
     def post(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
             book = get_object_or_404(Book, id=kwargs.get("pk"))
-            quantity = int(self.request.POST.get("quantity"))
+            try:
+                quantity = int(self.request.POST.get("quantity"))
+            except (ValueError, TypeError):
+                quantity = 1
+
             try:
                 cart = Cart.objects.get(user=self.request.user, product=book)
                 if cart.quantity + quantity <= book.stock:
