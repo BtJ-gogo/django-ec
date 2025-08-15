@@ -99,6 +99,7 @@ class OrderView(LoginRequiredMixin, View):
             city=address.city,
             address1=address.address1,
             address2=address.address2,
+            total_price=sum(cart.get_total_price() for cart in cart_list),
         )
         # Product Info to OrderItem
         for cart in cart_list:
