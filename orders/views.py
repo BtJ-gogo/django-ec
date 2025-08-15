@@ -137,11 +137,11 @@ class AddressSelectView(LoginRequiredMixin, SearchRedirectMixin, View):
         return redirect(reverse("orders:order"))
 
 
-class OrderCompletedView(SearchRedirectMixin, TemplateView):
+class OrderCompletedView(LoginRequiredMixin, SearchRedirectMixin, TemplateView):
     template_name = "order_completed.html"
 
 
-class OrderCanceledView(SearchRedirectMixin, TemplateView):
+class OrderCanceledView(LoginRequiredMixin, SearchRedirectMixin, TemplateView):
     template_name = "order_canceled.html"
 
 
