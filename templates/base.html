@@ -10,14 +10,14 @@
     </head>
     <body>
         <nav class="navbar navbar-dark bg-dark navbar-expand-md">
-            <a href="{% url "products:book_list" %}" class="navbar-brand">Django EC Site</a>
+            <a href="{% url 'products:book_list' %}" class="navbar-brand">Django EC Site</a>
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navLinks">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navLinks">
                 <form class="d-flex" method="get">
-                    <input class="form-control me-2" type="search" name="search" value="{{ request.GET.search }}" />
-                    <button class="btn btn-outline-light text-nowrap"type="submit">キーワード検索</button>
+                    <input class="form-control me-2" type="search" name="search" value="{{ request.GET.search|default:'' }}" />
+                    <button class="btn btn-outline-light text-nowrap" type="submit">キーワード検索</button>
                 </form>
                 <div class="navbar-nav ms-auto">
                     <a href="{% url "carts:cart" %}" class="nav-item nav-link"><i class="bi bi-cart"></i> 買い物かご</a>
