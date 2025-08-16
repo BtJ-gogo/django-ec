@@ -1,22 +1,48 @@
 {% extends "base.html" %}
 
-{% block title %}カート{% endblock %}
+{% block title %}ショッピングカート{% endblock %}
 
 {% block content %}
-{% for item in object_list %}
-<p>{{ item.product.name }} {{ item.product.price }} {{ item.quantity }}</p>
-<form method="post" action="{% url "carts:delete_cart" item.id %}">
-    {% csrf_token %}
-    <button type="submit">削除</button>
-</form>
-{% empty %}
-<p>商品が入っていません</p>
-<p><a href="{% url "products:book_list" %}">トップへ</a></p>
-{% endfor %}
-
-{% if total %}
-<p>合計金額</p>
-<p>{{ total }}</p>
-<a href="{% url "orders:order" %}">購入手続きへ</a>
-{% endif %}
+<div class="container pt-4">
+    <div class="row">
+        {% if not object_list %}
+            <p class="alert alert-warning text-center">商品が入っていません</p>
+            <p class="text-center"><a href="{% url 'products:book_list' %}">トップへ</a></p>
+        {% endif %}
+        <div class="col-md-8">
+        {% for item in object_list %}
+            <div class="card mb-3" style="max-width: 800px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                    <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" class="img-fluid rounded-start" alt="..."></a>
+                    </div>
+                    <div class="col-md-8">
+                    <div class="card-body">
+                        <a href="{{ item.product.get_absolute_url }}"><h5 class="card-title">{{ item.product.name }}</h5></a>
+                        <p class="card-text">価格： {{ item.product.price }}円</p>
+                        <p class="card-text">数量： {{ item.quantity }}</p>
+                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        <form method="post" action="{% url 'carts:delete_cart' item.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit"><i class="bi bi-trash"></i> 削除</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% if total %}
+        <div class="col-md-4">
+            <div class="card p-4">          
+            <h4 class="card-title">合計金額</h4>
+            <h5 class="card-text text-end">{{ total }}円</h5>
+            <div class="d-grid gap-2 col-8 mx-auto">
+                <a href="{% url 'orders:order' %}" class="btn btn-danger btn-lg">購入手続きへ</a>
+            </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
