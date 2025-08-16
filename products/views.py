@@ -69,7 +69,7 @@ class AuthorDetailView(SearchRedirectMixin, DetailView):
     model = Author
     template_name = "author_detail.html"
     context_object_name = "author"
-    paginate_by = 10
+    paginate_by = 6
     search_redirect_url_name = "products:book_list"
 
     # get_context_data()で著作一覧を取得して表示するようにする
@@ -81,7 +81,7 @@ class AuthorDetailView(SearchRedirectMixin, DetailView):
         page_number = self.request.GET.get("page")
         page = p.get_page(page_number)
 
-        context["books"] = page
+        context["page_obj"] = page
         return context
 
 
