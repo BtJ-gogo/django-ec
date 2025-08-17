@@ -28,13 +28,14 @@
                                 {{ form }}
                                 <button class="btn btn-danger btn-lg mt-3 w-100" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
                             </form>
+                            {% else %}
+                                <p class="text-danger">現在在庫切れです。</p>
+                            {% endif %}
                             <form method="post" action="{% url 'products:favorite_toggle' product.product.pk %}">
                                 {% csrf_token %}
                                 <button class="btn btn-primary w-100" type="submit"><i class="bi bi-star"></i> お気に入りから削除</button>
                             </form>
-                            {% else %}
-                            <p class="text-danger">現在在庫切れです。</p>
-                            {% endif %}
+
                         </div>
                     </div>
                 </div>
