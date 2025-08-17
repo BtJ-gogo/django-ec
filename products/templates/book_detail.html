@@ -14,7 +14,7 @@
             <hr>
             <p>{{ book.category }}</p>
             <p>{{ book.price }}円</p>        
-            <hr>
+            
             <h4>商品詳細</h4>
             <p>著者: {{ book.author }}</p>
             <p>出版日: {{ book.publication_date }} 表示形式を変更</p>
@@ -24,10 +24,13 @@
         <div class="col-3 text-center pt-4 border rounded">
             {% if form %}
             <form method="post" action="{% url "carts:add_cart" book.pk %}" class="mb-3">
-                {% csrf_token %}
+                {% csrf_token %}            
                 {{ form }}
                 <button class="btn btn-danger btn-lg mt-3 w-100" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
             </form>
+            {% else %}
+            <p class="text-danger">現在在庫切れです。</p>
+            {% endif %}
             <form method="post" action="{% url 'products:favorite_toggle' book.pk %}">
                 {% csrf_token %}
                 {% if favorite %}
@@ -36,9 +39,6 @@
                 <button class="btn btn-warning w-100" type="submit"><i class="bi bi-star-fill"></i> お気に入りに追加</button>
                 {% endif %}
             </form>
-            {% else %}
-            <p class="text-danger">現在在庫切れです。</p>
-            {% endif %}
         </div>
     </div>
     <div class="row mt-4">
