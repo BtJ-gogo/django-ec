@@ -3,17 +3,44 @@
 {% block title %}お気に入りリスト{% endblock %}
 
 {% block content %}
-{% for product in object_list %}
-<p>イメージ {{ product.product.name }} - {{ product.product.price }}円</p>
-<form method="post" action="{% url 'carts:add_cart' product.product.pk %}">
-    {% csrf_token %}
-    <button type="submit">カートに追加</button>
-</form>
-<form method="post" action="{% url 'accounts:favorite_delete' product.product.pk %}">
-    {% csrf_token %}
-    <button type="submit">お気に入りから削除</button>
-</form>
-{% empty %}
-<p>お気に入りの商品はありません。</p>
-{% endfor %}
+<div class="container pt-4">
+    <div class="row">
+        {% if not object_list %}
+            <p class="alert alert-warning text-center">お気に入りの商品はありません。</p>
+            <p class="text-center"><a href="{% url 'products:book_list' %}">トップへ</a></p>
+        {% endif %}
+        {% for product in object_list %}
+        <div class="col-12">
+            <div class="card mb-3 w-100">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <a href="{{ product.product.get_absolute_url }}"><img src="{{ product.product.image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}"></a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <a href="{{ product.product.get_absolute_url }}"><h5 class="card-title">{{ product.product.name }}</h5></a>
+                            <a href="{{ product.product.author.get_absolute_url }}"><p class="card-text">{{ product.product.author.name }}</a>(著)</p>
+                            <p class="card-text">{{ product.product.price }}円</p>
+                            <p class="card-text"><small class="text-body-secondary">{{ product.created_at }}に追加されました。</small></p>
+                            {% if product.product.stock > 0 %}
+                            <form method="post" action="{% url "carts:add_cart" product.product.pk %}" class="mb-3">
+                                {% csrf_token %}
+                                {{ form }}
+                                <button class="btn btn-danger btn-lg mt-3 w-100" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
+                            </form>
+                            <form method="post" action="{% url 'products:favorite_toggle' product.product.pk %}">
+                                {% csrf_token %}
+                                <button class="btn btn-primary w-100" type="submit"><i class="bi bi-star"></i> お気に入りから削除</button>
+                            </form>
+                            {% else %}
+                            <p class="text-danger">現在在庫切れです。</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
