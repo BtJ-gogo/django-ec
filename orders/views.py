@@ -23,14 +23,21 @@ class OrderView(LoginRequiredMixin, SearchRedirectMixin, View):
     def get(self, request, *args, **kwargs):
         # 配送先
         address_id = self.request.session.get("selected_address_id", None)
+
         if address_id:
-            address = get_object_or_404(
-                ShippingAddress, user=self.request.user, id=address_id
-            )
+            try:
+                address = ShippingAddress.objects.get(
+                    user=self.request.user, id=address_id
+                )
+            except ShippingAddress.DoesNotExist:
+                address = ShippingAddress.objects.filter(
+                    user=self.request.user, is_default=True
+                ).first()
         else:
             address = ShippingAddress.objects.filter(
                 user=self.request.user, is_default=True
-            ).first()
+            )
+
         if not address:
             messages.info(request, "配送先住所を登録してください。")
             return redirect(
