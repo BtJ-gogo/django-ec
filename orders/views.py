@@ -33,10 +33,11 @@ class OrderView(LoginRequiredMixin, SearchRedirectMixin, View):
                 address = ShippingAddress.objects.filter(
                     user=self.request.user, is_default=True
                 ).first()
+
         else:
             address = ShippingAddress.objects.filter(
                 user=self.request.user, is_default=True
-            )
+            ).first()
 
         if not address:
             messages.info(request, "配送先住所を登録してください。")
