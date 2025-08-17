@@ -3,31 +3,49 @@
 {% block title %}{{ book.name }}{% endblock %}
 
 {% block content %}
-<img src="{{ book.image.url }}" />
-<p>{{ book.name }}</p>
-<p><a href="{{ book.author.get_absolute_url }}">{{ book.author }}(著)</a></p>
-<p>{{ book.category }}</p>
-<p>${{ book.price }}</p>
-{% if form %}
-<form method="post" action="{% url "carts:add_cart" book.pk %}">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">カートに入れる</button>
-</form>
-{% else %}
-<p>現在在庫切れです。</p>
-{% endif %}
-<p>商品詳細</p>
-<p>著者: {{ book.author }}</p>
-<p>出版日: {{ book.publication_date }}</p>
-<p>出版社: {{ book.publisher }}</p>
-<p>{{ book.description }}</p>
-<form method="post" action="{% url 'products:favorite_toggle' book.pk %}">
-    {% csrf_token %}
-    {% if favorite %}
-    <button type="submit">お気に入りから削除</button>
-    {% else %}
-    <button type="submit">お気に入りに追加</button>
-    {% endif %}
-</form>
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-4 text-center">
+            <img src="{{ book.image.url }}" alt="{{ book.name }}" class="img-fluid">
+        </div>
+        <div class="col-5">
+            <h3>{{ book.name }}</h3>
+            <p><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a>(著)</p>
+            <hr>
+            <p>{{ book.category }}</p>
+            <p>{{ book.price }}円</p>        
+            <hr>
+            <h4>商品詳細</h4>
+            <p>著者: {{ book.author }}</p>
+            <p>出版日: {{ book.publication_date }} 表示形式を変更</p>
+            <p>出版社: {{ book.publisher }}</p>
+            <p>{{ book.description }}</p>
+        </div>
+        <div class="col-3 text-center pt-4 border rounded">
+            {% if form %}
+            <form method="post" action="{% url "carts:add_cart" book.pk %}" class="mb-3">
+                {% csrf_token %}
+                {{ form }}
+                <button class="btn btn-danger btn-lg mt-3 w-100" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
+            </form>
+            <form method="post" action="{% url 'products:favorite_toggle' book.pk %}">
+                {% csrf_token %}
+                {% if favorite %}
+                <button class="btn btn-primary w-100" type="submit"><i class="bi bi-star"></i> お気に入りから削除</button>
+                {% else %}
+                <button class="btn btn-warning w-100" type="submit"><i class="bi bi-star-fill"></i> お気に入りに追加</button>
+                {% endif %}
+            </form>
+            {% else %}
+            <p class="text-danger">現在在庫切れです。</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mt-4">
+        <h3>著者のその他の作品</h3>
+        <div class="col-12">
+            ここにカードで何件か表示。
+        </div>
+    </div>
+</div>
 {% endblock %}
