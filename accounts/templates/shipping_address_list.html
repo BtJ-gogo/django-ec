@@ -1,19 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}配送先住所{% endblock %}
 
 {% block content %}
-<a href="{% url "accounts:shipping_add" %}">新規住所を追加</a>
-{% for address in object_list %}
-{% if address.is_default %}
-<p>デフォルト</p>
-{% endif %}
-<p>{{ address.first_name }}</p>
-<a href="{% url "accounts:shipping_update" address.id %}">編集</a>
-<form method="post" action="{% url "accounts:shipping_delete" address.id %}">
-    {% csrf_token %}
-    <button type="submit">削除</button>
-</form>
-{% empty %}
-{% endfor %}
+<div class="container pt-4">
+    <h1 class="mb-4">配送先住所</h1>
+    {% if not object_list %}
+    <p class="alert alert-danger">住所が登録されていません。</p>
+    {% endif %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <a href="{% url "accounts:shipping_add" %}" class="btn btn-danger">新規住所を追加</a>
+        </div>
+    </div>
+    <div class="row">
+        {% for address in object_list %}
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                {% if address.is_default %}<p class="card-text text-end text-danger my-0"><small>デフォルト</small></p>{% else %}<p class="card-text text-end text-secondary my-0"><small>デフォルトに変更する</small></p>{% endif %}
+                <p class="card-text my-0">{{ address.last_name }} {{ address.first_name }}</p>
+                <p class="card-text my-0">{{ address.zipcode }}</p>
+                <p class="card-text my-0">{{ address.get_state_display }} {{ address.city }} {{ address.address1 }}</p>
+                {% if address.address2 %}<p class="card-text my-0">{{ address.address2 }}</p>{% endif %}
+                <p class="card-text mt-0">電話番号：{{ address.phone }}</p>
+                <div class="d-flex">
+                    <a href="{% url 'accounts:shipping_update' address.id %}" class="btn btn-warning me-5">編集</a>
+                    <form method="post" action="{% url "accounts:shipping_delete" address.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">削除</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
