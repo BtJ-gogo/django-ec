@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Third-party
     "allauth",
     "allauth.account",
+    "widget_tweaks",
     # local
     "products",
     "carts",
