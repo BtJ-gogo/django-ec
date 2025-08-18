@@ -7,15 +7,15 @@ from products.models import Book
 
 class Order(models.Model):
     class PaymentStatus(models.TextChoices):
-        PENDING = "PE", "Pending"
-        PAID = "PA", "Paid"
-        FAILED = "FA", "Failed"
-        REFUNDED = "RE", "Refunded"
+        PENDING = "PE", "保留中"
+        PAID = "PA", "支払い済み"
+        FAILED = "FA", "支払い失敗"
+        REFUNDED = "RE", "返金済み"
 
     class ShippingStatus(models.TextChoices):
-        PENDING = "PE", "Pending"
-        SHIPPED = "SH", "Shipped"
-        DELIVERED = "DE", "Delivered"
+        PENDING = "PE", "発送準備中"
+        SHIPPED = "SH", "発送済み"
+        DELIVERED = "DE", "配達済み"
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
