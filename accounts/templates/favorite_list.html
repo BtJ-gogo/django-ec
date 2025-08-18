@@ -4,6 +4,8 @@
 
 {% block content %}
 <div class="container pt-4">
+    <h1>お気に入りリスト</h1>
+    <hr>
     <div class="row">
         {% if not object_list %}
             <p class="alert alert-warning text-center">お気に入りの商品はありません。</p>
@@ -21,7 +23,7 @@
                             <a href="{{ product.product.get_absolute_url }}"><h5 class="card-title">{{ product.product.name }}</h5></a>
                             <a href="{{ product.product.author.get_absolute_url }}"><p class="card-text">{{ product.product.author.name }}</a>(著)</p>
                             <p class="card-text">{{ product.product.price }}円</p>
-                            <p class="card-text"><small class="text-body-secondary">{{ product.created_at }}に追加されました。</small></p>
+                            <p class="card-text"><small class="text-body-secondary">{{ product.created_at|date:"Y年n月j日" }}に追加されました。</small></p>
                             {% if product.product.stock > 0 %}
                             <form method="post" action="{% url "carts:add_cart" product.product.pk %}" class="mb-3">
                                 {% csrf_token %}
