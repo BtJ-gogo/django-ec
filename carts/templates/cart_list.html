@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
+{% load humanize %}
+
 {% block title %}ショッピングカート{% endblock %}
 
 {% block content %}
 <div class="container pt-4">
+    <h1>ショッピングカート</h1>
+    <hr>
     <div class="row">
         {% if not object_list %}
             <p class="alert alert-warning text-center">商品が入っていません</p>
@@ -17,16 +21,21 @@
                     <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" class="img-fluid rounded-start" alt="..."></a>
                     </div>
                     <div class="col-md-8">
-                    <div class="card-body">
-                        <a href="{{ item.product.get_absolute_url }}"><h5 class="card-title">{{ item.product.name }}</h5></a>
-                        <p class="card-text">価格： {{ item.product.price }}円</p>
-                        <p class="card-text">数量： {{ item.quantity }}</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                        <form method="post" action="{% url 'carts:delete_cart' item.id %}">
-                            {% csrf_token %}
-                            <button class="btn btn-danger" type="submit"><i class="bi bi-trash"></i> 削除</button>
-                        </form>
-                    </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <a href="{{ item.product.get_absolute_url }}"><h5 class="card-title">{{ item.product.name }}</h5></a>
+                                    <p class="card-text">価格： {{ item.product.price|intcomma }}円</p>
+                                    <p class="card-text">数量： {{ item.quantity }}</p>
+                                </div>
+                                <div class="col-4">
+                                    <form method="post" action="{% url 'carts:delete_cart' item.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-danger" type="submit"><i class="bi bi-trash"></i> 削除</button>
+                                    </form>
+                                </div>
+                            </div>                            
+                        </div>
                     </div>
                 </div>
             </div>

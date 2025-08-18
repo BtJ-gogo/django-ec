@@ -1,18 +1,101 @@
 {% extends "base.html" %}
 
+{% load humanize %}
+
 {% block title %}注文詳細{% endblock %}
 
 {% block content %}
-<p>{{ object.name }} {{ object.phone }}</p>
-<p>{{ object.zipcode }}{{object.state}}{{object.city}}{{ object.address1}}</p>
-{% if address2 %}{{ object.address2 }}{% endif %}
-<p>注文ID: {{ object.id }}</p>
-<p>注文日: {{ object.date }}</p>
-<p>合計金額: {{ object.total_price }}円</p>
-
-{% for item in object.orderitem_set.all %}
-<p>イメージ {{ item.product.name }} - {{ item.price }}円 - {{ item.quantity }}個 {{item.get_total_price}}円</p>
-{% empty %}
-<p>商品がありません。</p>
-{% endfor %}
+<div class="container pt-4">
+    {% if not object %}
+    <p class="alert alert-danger">注文がみつかりません。</p>
+    {% else %}
+    <h1>注文詳細</h1>
+    <hr>
+    <p>注文日: {{ object.date|date:"Y年n月j日" }}</p>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="fw-bold">配送先住所</p>
+                            <table class="table">
+                                <tr>
+                                    <th>氏名:</th>
+                                    <td>{{ object.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>住所:</th>
+                                    <td>{{ object.zipcode }} {{ object.state }}{{ object.city }}{{ object.address1 }}{% if object.address2 %}{{ object.address2 }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>電話番号:</th>
+                                    <td>{{ object.phone }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-4">
+                            <p class="fw-bold">支払い方法</p>
+                            <p>支払い情報をここへ</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="fw-bold">購入詳細</p>
+                            <table class="table">
+                                <tr>
+                                    <th>商品の小計:</th>
+                                    <td class="text-end">{{ object.total_price|intcomma }}円</td>
+                                </tr>
+                                <tr>
+                                    <th>配送料・手数料:</th>
+                                    <td class="text-end">0円</td>
+                                </tr>
+                                <tr>
+                                    <th>注文合計:</th>
+                                    <td class="text-end">{{ object.total_price|intcomma }}円</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3><span class="badge bg-warning text-dark">{{ object.get_shipping_status_display }}</span></h3>
+                    <div class="row">
+                        <div class="col-12">
+                            {% for item in object.orderitem_set.all %}
+                            <div class="row mb-3">
+                                <div class="col-3">
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid">
+                                </div>
+                                <div class="col-6">
+                                    <p><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></p>
+                                    <p>{{ item.price|intcomma }}円</p>
+                                    <p>数量: {{ item.quantity }}</p>
+                                </div>
+                                <div class="col-3">
+                                    {% if item.product.stock > 0 %}
+                                    <form method="post" action="{% url 'carts:add_cart' item.product.pk %}" class="mb-3">
+                                        {% csrf_token %}            
+                                        {{ form }}
+                                        <button class="btn btn-danger mt-3" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
+                                    </form>
+                                    {% else %}
+                                    <p class="text-muted">在庫切れ</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
