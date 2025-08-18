@@ -1,11 +1,79 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
-{% block title %}{% endblock %}
+{% block title %}住所を編集{% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">編集</button>
-</form>
+<div class="container pt-4">
+    <h1>住所を編集</h1>
+    <hr>
+    <form class="w-50" method="post">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col">
+                <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                {{ form.last_name|add_class:"form-control" }}
+            </div>
+            <div class="col">
+                <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                {{ form.first_name|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="{{ form.last_kana_name.id_for_label }}">{{ form.last_kana_name.label }}</label>
+                {{ form.last_kana_name|add_class:"form-control" }}
+            </div>
+            <div class="col">
+                <label for="{{ form.first_kana_name.id_for_label }}">{{ form.first_kana_name.label }}</label>
+                {{ form.first_kana_name|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-6">
+                <label for="{{ form.zipcode.id_for_label }}">{{ form.zipcode.label }}</label>
+                {{ form.zipcode|add_class:"form-control" }}
+            </div>
+            <div class="col-6">
+                <label for="{{ form.state.id_for_label }}">{{ form.state.label }}</label>
+                {{ form.state|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+                {{ form.city|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label>
+                {{ form.address1|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="{{ form.address2.id_for_label }}">{{ form.address2.label }}</label>
+                {{ form.address2|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                {{ form.phone|add_class:"form-control" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="form-check">
+                    {{ form.is_default|add_class:"form-check-input" }}
+                    <label class="form-check-label" for="{{ form.is_default.id_for_label }}">
+                        {{ form.is_default.label }}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+    </form>
+</div>
 {% endblock %}
