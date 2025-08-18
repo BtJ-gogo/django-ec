@@ -19,3 +19,16 @@ class ShippingAddressForm(forms.ModelForm):
             "address2",
             "is_default",
         ]
+        labels = {
+            "last_name": "姓",
+            "first_name": "名",
+            "last_kana_name": "セイ",
+            "first_kana_name": "メイ",
+            "phone": "電話番号",
+            "zipcode": "郵便番号",
+            "state": "都道府県",
+            "city": "市区町村",
+            "address1": "番地・建物名等",
+            "address2": "建物名等（任意）",
+            "is_default": "デフォルト住所にする",
+        }
