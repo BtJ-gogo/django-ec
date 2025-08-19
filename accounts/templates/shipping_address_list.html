@@ -28,7 +28,7 @@
                 </div>
                 <div class="card-footer border-0 bg-white">
                     <div class="d-flex">
-                        <a href="{% url 'accounts:shipping_update' address.id %}" class="btn btn-warning me-5">編集</a>
+                        <a href="{% url 'accounts:shipping_update' address.id %}" class="btn btn-warning me-3">編集</a>
                         <form method="post" action="{% url 'accounts:shipping_delete' address.id %}">
                             {% csrf_token %}
                             <button class="btn btn-danger" type="submit">削除</button>
