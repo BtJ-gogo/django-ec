@@ -17,3 +17,7 @@
     width: 145px;
     height: 145px;
 }
+
+.w-card-list {
+    max-width: 300px;
+}
