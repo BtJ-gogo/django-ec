@@ -9,15 +9,13 @@
     {% if not object_list %}
     <p class="alert alert-danger">住所が登録されていません。</p>
     {% endif %}
-    <div class="row mb-4">
-        <div class="col-12">
-            <a href="{% url 'accounts:shipping_add' %}" class="btn btn-danger">新規住所を追加</a>
-        </div>
+    <div class="mb-3">
+        <a href="{% url 'accounts:shipping_add' %}" class="btn btn-danger">新規住所を追加</a>
     </div>
     <div class="row">
         {% for address in object_list %}
-        <div class="col-4 d-flex">
-            <div class="card flex-fill flex-column">
+        <div class="col-sm-6 col-md-4 d-flex">
+            <div class="card flex-fill flex-column mb-3">
                 <div class="card-body">
                     {% if address.is_default %}<p class="card-text text-end text-danger my-0"><small>デフォルト</small></p>{% else %}<p class="card-text text-end text-secondary my-0"><small>デフォルトに変更する</small></p>{% endif %}
                     <p class="card-text my-0">{{ address.last_name }} {{ address.first_name }}</p>
