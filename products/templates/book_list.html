@@ -1,55 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}Book List{% endblock %}
+{% block title %}リスト一覧{% endblock %}
 
 {% block content %}
-<div class="pt-4">
-    <h1>Book List</h1>
-    {% if not object_list %}
-        <p class="alert alert-warning text-center">No books available</p>
-        <p class="text-center"><a href="{% url 'products:book_list' %}">Back to Home</a></p>
-    {% endif %}
-    <div class="row">
-    {% for book in object_list %}
-        <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-            <div class="card w-card-list mb-4">
-                <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top img-fluid img-" alt="{{ book.name }}"></a>
-                <div class="card-body">
-                    <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
-                    <a href="{{ book.author.get_absolute_url }}" class="card-text">{{ book.author }}</a>
-                    <p class="card-text">{{ book.price }}円</p>
-                    <p class="card-text"><a href="{% url 'products:book_list' book.category.name %}">{{ book.category }}</a></p>
-                </div>
+<h1>リスト一覧</h1>
+{% if not object_list %}
+    <p class="alert alert-warning text-center">No books available</p>
+    <p class="text-center"><a href="{% url 'products:book_list' %}">Back to Home</a></p>
+{% endif %}
+<div class="row">
+{% for book in object_list %}
+    <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+        <div class="card w-card-list mb-4">
+            <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top img-fluid img-" alt="{{ book.name }}"></a>
+            <div class="card-body">
+                <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
+                <a href="{{ book.author.get_absolute_url }}" class="card-text">{{ book.author }}</a>
+                <p class="card-text">{{ book.price }}円</p>
+                <p class="card-text"><a href="{% url 'products:book_list' book.category.name %}">{{ book.category }}</a></p>
             </div>
         </div>
-    {% endfor %}
     </div>
-    {% if paginator.num_pages > 1 %}
-    <ul class="pagination justify-content-center">
-        <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
-            {% if page_obj.has_previous %}
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            </a>
-            {% else %}
-            <span class="page-link" aria-hidden="true">&laquo;</span>
-            {% endif %}
-        </li>
-        {% for i in paginator.page_range %}
-        <li class="page-item {% if i == page_obj.number %}active{% endif %}">
-            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-        </li>
-        {% endfor %}
-        <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
-            {% if page_obj.has_next %}
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            </a>
-            {% else %}
-            <span class="page-link" aria-hidden="true">&raquo;</span>
-            {% endif %}
-        </li>
-    </ul>
-    {% endif %}
+{% endfor %}
 </div>
+{% if paginator.num_pages > 1 %}
+<ul class="pagination justify-content-center">
+    <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+        {% if page_obj.has_previous %}
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        </a>
+        {% else %}
+        <span class="page-link" aria-hidden="true">&laquo;</span>
+        {% endif %}
+    </li>
+    {% for i in paginator.page_range %}
+    <li class="page-item {% if i == page_obj.number %}active{% endif %}">
+        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+    </li>
+    {% endfor %}
+    <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+        {% if page_obj.has_next %}
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        </a>
+        {% else %}
+        <span class="page-link" aria-hidden="true">&raquo;</span>
+        {% endif %}
+    </li>
+</ul>
+{% endif %}
 {% endblock %}
