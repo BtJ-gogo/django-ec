@@ -36,6 +36,9 @@ class Order(models.Model):
     total_price = models.PositiveIntegerField()
     stripe_id = models.CharField(max_length=250, blank=True)
 
+    class Meta:
+        ordering = ["-date"]
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
