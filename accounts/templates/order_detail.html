@@ -13,11 +13,11 @@
     <hr>
     <p>注文日: {{ object.date|date:"Y年n月j日" }}</p>
     <div class="row mb-4">
-        <div class="col-12">
+        <div class="col">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col col-md-4">
                             <p class="fw-bold">配送先住所</p>
                             <table class="table">
                                 <tr>
@@ -34,11 +34,11 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="col-4">
+                        <div class="col col-md-4">
                             <p class="fw-bold">支払い方法</p>
                             <p>支払い情報をここへ</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col col-md-4">
                             <p class="fw-bold">購入詳細</p>
                             <table class="table">
                                 <tr>
@@ -65,33 +65,29 @@
             <div class="card">
                 <div class="card-body">
                     <h3><span class="badge bg-warning text-dark">{{ object.get_shipping_status_display }}</span></h3>
-                    <div class="row">
-                        <div class="col-12">
-                            {% for item in object.orderitem_set.all %}
-                            <div class="row mb-3">
-                                <div class="col-3">
-                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid img-cart">
-                                </div>
-                                <div class="col-6">
-                                    <p><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></p>
-                                    <p>{{ item.price|intcomma }}円</p>
-                                    <p>数量: {{ item.quantity }}</p>
-                                </div>
-                                <div class="col-3">
-                                    {% if item.product.stock > 0 %}
-                                    <form method="post" action="{% url 'carts:add_cart' item.product.pk %}" class="mb-3">
-                                        {% csrf_token %}            
-                                        {{ form }}
-                                        <button class="btn btn-danger mt-3" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
-                                    </form>
-                                    {% else %}
-                                    <p class="text-muted">在庫切れ</p>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% endfor %}
+                    {% for item in object.orderitem_set.all %}
+                    <div class="d-flex flex-column flex-md-row mt-3">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-cart me-3">
+                        <div class="d-flex flex-column flex-md-row justify-content-between w-75">
+                        <div>
+                            <p><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></p>
+                            <p>{{ item.price|intcomma }}円</p>
+                            <p>数量: {{ item.quantity }}</p>
+                        </div>
+                        <div>
+                            {% if item.product.stock > 0 %}
+                            <form method="post" action="{% url 'carts:add_cart' item.product.pk %}" class="mb-3">
+                                {% csrf_token %}            
+                                {{ form }}
+                                <button class="btn btn-danger mt-3" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
+                            </form>
+                            {% else %}
+                            <p class="text-muted">在庫切れ</p>
+                            {% endif %}
+                        </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
