@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load humanize %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ author.name }}の紹介ページ{% endblock %}
 
 {% block content %}
 <div class="container pt-4">
@@ -12,9 +13,9 @@
     <h1>著作一覧</h1>
     <div class="row">
         {% for book in page_obj %}
-        <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="col-xl-4 col-md-6 col-sm-12 d-flex">
             <div class="card mb-4">
-                <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.name }}"></a>
+                <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top img-author" alt="{{ book.name }}"></a>
                 <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
                 <p class="card-text">{{ book.author }}</p>
                 <p class="card-text">{{ book.price }}円</p>
