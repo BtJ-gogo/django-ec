@@ -1,27 +1,38 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block title %}{{ book.name }}{% endblock %}
 
 {% block content %}
 <div class="container pt-4">
     <div class="row">
-        <div class="col-4 text-center">
+        <div class="col-md-4 text-center">
             <img src="{{ book.image.url }}" alt="{{ book.name }}" class="img-fluid">
         </div>
-        <div class="col-5">
+        <div class="col-md-5">
             <h3>{{ book.name }}</h3>
             <p><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a>(著)</p>
             <hr>
-            <p>{{ book.category }}</p>
-            <p>{{ book.price }}円</p>        
-            
-            <h4>商品詳細</h4>
-            <p>著者: {{ book.author }}</p>
-            <p>出版日: {{ book.publication_date }} 表示形式を変更</p>
-            <p>出版社: {{ book.publisher }}</p>
-            <p>{{ book.description }}</p>
+            <p><a href="{% url 'products:book_list' book.category.name %}">{{ book.category }}</a></p>
+            <p>{{ book.price|intcomma }}円</p>
+
+            <h4 class="mt-4">商品詳細</h4>
+            <table class="table">
+                <tr>
+                    <th>著者</th>
+                    <td>{{ book.author }}</td>
+                </tr>
+                <tr>
+                    <th>出版日</th>
+                    <td>{{ book.publication_date|date:"Y年n月j日" }}</td>
+                </tr>
+                <tr>
+                    <th>出版社</th>
+                    <td>{{ book.publisher }}</td>
+                </tr>
+            </table>
         </div>
-        <div class="col-3 text-center pt-4 border rounded">
+        <div class="col-md-3 text-center pt-4 border rounded">
             {% if form %}
             <form method="post" action="{% url "carts:add_cart" book.pk %}" class="mb-3">
                 {% csrf_token %}            
