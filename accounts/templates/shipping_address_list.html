@@ -11,27 +11,29 @@
     {% endif %}
     <div class="row mb-4">
         <div class="col-12">
-            <a href="{% url "accounts:shipping_add" %}" class="btn btn-danger">新規住所を追加</a>
+            <a href="{% url 'accounts:shipping_add' %}" class="btn btn-danger">新規住所を追加</a>
         </div>
     </div>
     <div class="row">
         {% for address in object_list %}
-        <div class="col-4">
-            <div class="card">
+        <div class="col-4 d-flex">
+            <div class="card flex-fill flex-column">
                 <div class="card-body">
-                {% if address.is_default %}<p class="card-text text-end text-danger my-0"><small>デフォルト</small></p>{% else %}<p class="card-text text-end text-secondary my-0"><small>デフォルトに変更する</small></p>{% endif %}
-                <p class="card-text my-0">{{ address.last_name }} {{ address.first_name }}</p>
-                <p class="card-text my-0">{{ address.zipcode }}</p>
-                <p class="card-text my-0">{{ address.get_state_display }} {{ address.city }} {{ address.address1 }}</p>
-                {% if address.address2 %}<p class="card-text my-0">{{ address.address2 }}</p>{% endif %}
-                <p class="card-text mt-0">電話番号：{{ address.phone }}</p>
-                <div class="d-flex">
-                    <a href="{% url 'accounts:shipping_update' address.id %}" class="btn btn-warning me-5">編集</a>
-                    <form method="post" action="{% url "accounts:shipping_delete" address.id %}">
-                        {% csrf_token %}
-                        <button class="btn btn-danger" type="submit">削除</button>
-                    </form>
+                    {% if address.is_default %}<p class="card-text text-end text-danger my-0"><small>デフォルト</small></p>{% else %}<p class="card-text text-end text-secondary my-0"><small>デフォルトに変更する</small></p>{% endif %}
+                    <p class="card-text my-0">{{ address.last_name }} {{ address.first_name }}</p>
+                    <p class="card-text my-0">{{ address.zipcode }}</p>
+                    <p class="card-text my-0">{{ address.get_state_display }} {{ address.city }} {{ address.address1 }}</p>
+                    {% if address.address2 %}<p class="card-text my-0">{{ address.address2 }}</p>{% endif %}
+                    <p class="card-text mt-0">電話番号：{{ address.phone }}</p>
                 </div>
+                <div class="card-footer border-0 bg-white">
+                    <div class="d-flex">
+                        <a href="{% url 'accounts:shipping_update' address.id %}" class="btn btn-warning me-5">編集</a>
+                        <form method="post" action="{% url 'accounts:shipping_delete' address.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit">削除</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
