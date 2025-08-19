@@ -6,28 +6,32 @@
 <div class="container pt-4">
     <h1>配送先住所を選択</h1>
     <hr>
-    <form method="post">
-        {% csrf_token %}
-        {% for address in address_list %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="form-check me-3">
-                        <input class="form-check-input" type="radio" name="address" value="{{ address.pk }}" id="address{{ address.pk }}" {% if address.is_default %}checked{% endif %}>
-                    </div>
-                    <div>
-                        <label class="form-check-label" for="address{{ address.pk }}">
-                            <p class="mb-1 fw-bold">{{ address.last_name }} {{ address.first_name }}</p>
-                            <p class="mb-1">〒{{ address.zipcode }}</p>
-                            <p class="mb-1">{{ address.get_state_display }} {{ address.city }} {{ address.address1 }}{% if address.address2 %} {{ address.address2 }}{% endif %}</p>
-                            <p class="mb-0">{{ address.phone }}</p>
-                        </label>
+    <div class="row">
+        <div class="col-md-8">
+        <form method="post">
+            {% csrf_token %}
+            {% for address in address_list %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="radio" name="address" value="{{ address.pk }}" id="address{{ address.pk }}" {% if address.is_default %}checked{% endif %}>
+                        </div>
+                        <div>
+                            <label class="form-check-label" for="address{{ address.pk }}">
+                                <p class="mb-1 fw-bold">{{ address.last_name }} {{ address.first_name }}</p>
+                                <p class="mb-1">〒{{ address.zipcode }}</p>
+                                <p class="mb-1">{{ address.get_state_display }} {{ address.city }} {{ address.address1 }}{% if address.address2 %} {{ address.address2 }}{% endif %}</p>
+                                <p class="mb-0">{{ address.phone }}</p>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
+            <button class="btn btn-danger" type="submit">この住所を使用</button>
+        </form>
         </div>
-        {% endfor %}
-        <button class="btn btn-danger" type="submit">この住所を使用</button>
-    </form>
+    </div>
 </div>
 {% endblock %}
