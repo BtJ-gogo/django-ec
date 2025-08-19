@@ -1,0 +1,23 @@
+.img-product {
+    width: 400px;
+    height: 400px;
+}
+
+.img-product-list {
+    width: 300px;
+    height: 300px;
+}
+
+.img-cart {
+    width: 180px;
+    height: 180px;
+}
+
+.img-order {
+    width: 145px;
+    height: 145px;
+}
+
+.w-card-list {
+    max-width: 300px;
+}
