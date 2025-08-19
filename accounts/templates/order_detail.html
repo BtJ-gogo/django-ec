@@ -70,7 +70,7 @@
                             {% for item in object.orderitem_set.all %}
                             <div class="row mb-3">
                                 <div class="col-3">
-                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid">
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid img-cart">
                                 </div>
                                 <div class="col-6">
                                     <p><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></p>

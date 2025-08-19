@@ -11,9 +11,9 @@
     {% endif %}
     <div class="row">
     {% for book in object_list %}
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card mb-4">
-                <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top" alt="{{ book.name }}"></a>
+        <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+            <div class="card w-card-list mb-4">
+                <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top img-fluid img-" alt="{{ book.name }}"></a>
                 <div class="card-body">
                     <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
                     <a href="{{ book.author.get_absolute_url }}" class="card-text">{{ book.author }}</a>

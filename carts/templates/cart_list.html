@@ -17,8 +17,8 @@
         {% for item in object_list %}
             <div class="card mb-3" style="max-width: 800px;">
                 <div class="row g-0">
-                    <div class="col-md-4">
-                    <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" class="img-fluid rounded-start" alt="..."></a>
+                    <div class="col-md-3">
+                    <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" class="img-fluid rounded-start img-cart" alt="{{ item.product.name }}"></a>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
