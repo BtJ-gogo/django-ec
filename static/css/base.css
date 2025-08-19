@@ -8,6 +8,11 @@
     height: 300px;
 }
 
+.img-author {
+    max-width: 350px;
+    max-height: 350px;
+}
+
 .img-cart {
     width: 180px;
     height: 180px;
