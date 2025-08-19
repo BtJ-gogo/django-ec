@@ -72,10 +72,16 @@ class ShippingAddressUpdateView(LoginRequiredMixin, SearchRedirectMixin, UpdateV
 
 class ShippingAddressDeleteView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
-        obj = get_object_or_404(
+        del_obj = get_object_or_404(
             ShippingAddress, user=self.request.user, id=kwargs.get("pk")
         )
-        obj.delete()
+        del_obj.delete()
+
+        if del_obj.is_default:
+            obj = ShippingAddress.objects.filter(user=self.request.user).first()
+            if obj:
+                obj.is_default = True
+                obj.save()
         return redirect("accounts:shipping")
 
 
