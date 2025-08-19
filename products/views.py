@@ -44,6 +44,12 @@ class BookListView(SearchMixin, ListView):
     template_name = "book_list.html"
     paginate_by = 20
 
+    def get_queryset(self):
+        category = self.kwargs.get("category")
+        if category:
+            return Book.objects.filter(category__name=category)
+        return Book.objects.all()
+
 
 class BookDetailView(SearchRedirectMixin, DetailView):
     model = Book
@@ -63,6 +69,15 @@ class BookDetailView(SearchRedirectMixin, DetailView):
         context["favorite"] = favorite
 
         return context
+
+
+class BookCategoryView(SearchRedirectMixin, ListView):
+    model = Book
+    template_name = "book_category.html"
+
+    def get_queryset(self):
+        category = self.kwargs.get("category")
+        return Book.objects.filter(category__name=category)
 
 
 class AuthorDetailView(SearchRedirectMixin, DetailView):
