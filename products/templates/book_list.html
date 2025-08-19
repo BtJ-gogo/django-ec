@@ -3,7 +3,7 @@
 {% block title %}Book List{% endblock %}
 
 {% block content %}
-<div class="container pt-4">
+<div class="pt-4">
     <h1>Book List</h1>
     {% if not object_list %}
         <p class="alert alert-warning text-center">No books available</p>
@@ -18,7 +18,7 @@
                     <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
                     <a href="{{ book.author.get_absolute_url }}" class="card-text">{{ book.author }}</a>
                     <p class="card-text">{{ book.price }}円</p>
-                    <p class="card-text">{{ book.category }}</p>
+                    <p class="card-text"><a href="{% url 'products:book_list' book.category.name %}">{{ book.category }}</a></p>
                 </div>
             </div>
         </div>
