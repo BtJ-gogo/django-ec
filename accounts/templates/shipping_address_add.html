@@ -4,115 +4,113 @@
 {% block title %}新規住所を追加{% endblock %}
 
 {% block content %}
-<div class="container pt-4">
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-info">{{ message }}</div>
-    {% endfor %}
-    {% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info">{{ message }}</div>
+{% endfor %}
+{% endif %}
 
-    <h1>新規住所を追加</h1>
-    <hr>
-    <form method="post">
-        {% csrf_token %}
-        <div class="row mb-3">
-            <div class="col-12 col-md-5 col-xl-3">
-                <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
-                {{ form.last_name|add_class:"form-control" }}
-                {% for error in form.last_name.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-12 col-md-5 col-xl-3">
-                <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
-                {{ form.first_name|add_class:"form-control" }}
-                {% for error in form.first_name.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
+<h1>新規住所を追加</h1>
+<hr>
+<form method="post">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <div class="col-12 col-md-5 col-xl-3">
+            <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+            {{ form.last_name|add_class:"form-control" }}
+            {% for error in form.last_name.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="col-12 col-md-5 col-xl-3">
+            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+            {{ form.first_name|add_class:"form-control" }}
+            {% for error in form.first_name.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12 col-md-5 col-xl-3">
+            <label for="{{ form.last_kana_name.id_for_label }}">{{ form.last_kana_name.label }}</label>
+            {{ form.last_kana_name|add_class:"form-control" }}
+            {% for error in form.last_kana_name.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="col-12 col-md-5 col-xl-3">
+            <label for="{{ form.first_kana_name.id_for_label }}">{{ form.first_kana_name.label }}</label>
+            {{ form.first_kana_name|add_class:"form-control" }}
+            {% for error in form.first_kana_name.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12 col-md-5 col-xl-3">
+            <label for="{{ form.zipcode.id_for_label }}">{{ form.zipcode.label }}</label>
+            {{ form.zipcode|add_class:"form-control" }}
+            {% for error in form.zipcode.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="col-12 col-md-5 col-xl-3">
+            <label for="{{ form.state.id_for_label }}">{{ form.state.label }}</label>
+            {{ form.state|add_class:"form-control" }}
+            {% for error in form.state.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col col-md-10 col-xl-6">
+            <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+            {{ form.city|add_class:"form-control" }}
+            {% for error in form.city.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col col-md-10 col-xl-6">
+            <label for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label>
+            {{ form.address1|add_class:"form-control" }}
+            {% for error in form.address1.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col col-md-10 col-xl-6">
+            <label for="{{ form.address2.id_for_label }}">{{ form.address2.label }}</label>
+            {{ form.address2|add_class:"form-control" }}
+            {% for error in form.address2.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col col-md-10 col-xl-6">
+            <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+            {{ form.phone|add_class:"form-control" }}
+            {% for error in form.phone.errors %}
+                <small class="text-danger d-block">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="form-check">
+                {{ form.is_default|add_class:"form-check-input" }}
+                <label class="form-check-label" for="{{ form.is_default.id_for_label }}">
+                    {{ form.is_default.label }}
+                    {% for error in form.is_default.errors %}
+                        <small class="text-danger d-block">{{ error }}</small>
+                    {% endfor %}
+                </label>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-12 col-md-5 col-xl-3">
-                <label for="{{ form.last_kana_name.id_for_label }}">{{ form.last_kana_name.label }}</label>
-                {{ form.last_kana_name|add_class:"form-control" }}
-                {% for error in form.last_kana_name.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-12 col-md-5 col-xl-3">
-                <label for="{{ form.first_kana_name.id_for_label }}">{{ form.first_kana_name.label }}</label>
-                {{ form.first_kana_name|add_class:"form-control" }}
-                {% for error in form.first_kana_name.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-12 col-md-5 col-xl-3">
-                <label for="{{ form.zipcode.id_for_label }}">{{ form.zipcode.label }}</label>
-                {{ form.zipcode|add_class:"form-control" }}
-                {% for error in form.zipcode.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-12 col-md-5 col-xl-3">
-                <label for="{{ form.state.id_for_label }}">{{ form.state.label }}</label>
-                {{ form.state|add_class:"form-control" }}
-                {% for error in form.state.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col col-md-10 col-xl-6">
-                <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
-                {{ form.city|add_class:"form-control" }}
-                {% for error in form.city.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col col-md-10 col-xl-6">
-                <label for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label>
-                {{ form.address1|add_class:"form-control" }}
-                {% for error in form.address1.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col col-md-10 col-xl-6">
-                <label for="{{ form.address2.id_for_label }}">{{ form.address2.label }}</label>
-                {{ form.address2|add_class:"form-control" }}
-                {% for error in form.address2.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col col-md-10 col-xl-6">
-                <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
-                {{ form.phone|add_class:"form-control" }}
-                {% for error in form.phone.errors %}
-                    <small class="text-danger d-block">{{ error }}</small>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <div class="form-check">
-                    {{ form.is_default|add_class:"form-check-input" }}
-                    <label class="form-check-label" for="{{ form.is_default.id_for_label }}">
-                        {{ form.is_default.label }}
-                        {% for error in form.is_default.errors %}
-                            <small class="text-danger d-block">{{ error }}</small>
-                        {% endfor %}
-                    </label>
-                </div>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">保存</button>
-    </form>
-</div>
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+</form>
 {% endblock %}

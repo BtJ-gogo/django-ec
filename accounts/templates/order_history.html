@@ -5,72 +5,70 @@
 {% block title %}注文履歴{% endblock %}
 
 {% block content %}
-<div class="container pt-4">
-    <h1>注文履歴</h1>
-    <hr>
-    
-    {% if not object_list %}
-    <p class="alert alert-warning">注文履歴はまだありません。</p>
-    {% endif %}
+<h1>注文履歴</h1>
+<hr>
 
-    {% for order in object_list %}
-    <div class="card mb-4">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-2">
-                            <p class="m-0"><span class="fw-bold">注文日:</span></p>
-                        </div>
-                        <div class="col-2">
-                            <p class="m-0"><span class="fw-bold">合計金額:</span></p>
-                        </div>
-                        <div class="col-2">
-                            <p class="m-0"><span class="fw-bold">注文ID:</span></p>
-                        </div>
-                        <div class="col-2">
-                            <p class="m-0"><span class="fw-bold">支払いステータス:</span></p>
-                        </div>
+{% if not object_list %}
+<p class="alert alert-warning">注文履歴はまだありません。</p>
+{% endif %}
+
+{% for order in object_list %}
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-2">
+                        <p class="m-0"><span class="fw-bold">注文日:</span></p>
                     </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <p class="m-0">{{ order.date|date:"Y年n月j日" }}</p>
-                        </div>
-                        <div class="col-2">
-                            <p class="m-0">{{ order.total_price|intcomma }}円</p>
-                        </div>
-                        <div class="col-2">
-                            <p class="m-0">{{ order.id }}</p>
-                        </div>
-                        <div class="col-2">
-                            <p class="m-0">{{ order.get_payment_status_display }}</p>
-                        </div>
+                    <div class="col-2">
+                        <p class="m-0"><span class="fw-bold">合計金額:</span></p>
+                    </div>
+                    <div class="col-2">
+                        <p class="m-0"><span class="fw-bold">注文ID:</span></p>
+                    </div>
+                    <div class="col-2">
+                        <p class="m-0"><span class="fw-bold">支払いステータス:</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <p class="m-0">{{ order.date|date:"Y年n月j日" }}</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="m-0">{{ order.total_price|intcomma }}円</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="m-0">{{ order.id }}</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="m-0">{{ order.get_payment_status_display }}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-body">
-            <h3><span class="badge bg-warning text-dark">{{ order.get_shipping_status_display }}</span></h3>
-            <div class="d-flex flex-column flex-md-row">
-                <div class="w-75">
-                    {% for item in order.orderitem_set.all %}
-                    <div class="d-flex flex-column flex-md-row mt-3 ">
-                        <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-order me-3"></a>
-                        <div>
-                            <a href="{{ item.product.get_absolute_url }}"><h5 class="card-title">{{ item.product.name }}</h5></a>
-                            <p class="card-text">価格: {{ item.price|intcomma }}円</p>
-                            <p class="card-text">数量: {{ item.quantity }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div> 
-                <div>
-                    <p class="card-text">合計: {{ order.total_price|intcomma }}円</p>
-                    <a href="{% url 'accounts:order_detail' order.id %}" class="btn btn-primary">注文詳細</a>
-                </div>
-            </div>         
-        </div>
     </div>
-    {% endfor %}
+    <div class="card-body">
+        <h3><span class="badge bg-warning text-dark">{{ order.get_shipping_status_display }}</span></h3>
+        <div class="d-flex flex-column flex-md-row">
+            <div class="w-75">
+                {% for item in order.orderitem_set.all %}
+                <div class="d-flex flex-column flex-md-row mt-3 ">
+                    <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-order me-3"></a>
+                    <div>
+                        <a href="{{ item.product.get_absolute_url }}"><h5 class="card-title">{{ item.product.name }}</h5></a>
+                        <p class="card-text">価格: {{ item.price|intcomma }}円</p>
+                        <p class="card-text">数量: {{ item.quantity }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div> 
+            <div>
+                <p class="card-text">合計: {{ order.total_price|intcomma }}円</p>
+                <a href="{% url 'accounts:order_detail' order.id %}" class="btn btn-primary">注文詳細</a>
+            </div>
+        </div>         
+    </div>
 </div>
+{% endfor %}
 {% endblock %}

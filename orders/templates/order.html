@@ -3,65 +3,63 @@
 {% block title %}注文内容の確認{% endblock %}
 
 {% block content %}
-<div class="container pt-4">
-    <h1>注文内容の確認</h1>
-    <hr>
-    <div class="row">
-        <div class="col-8">
-            <div class="card">
-                <div class="card-header"><span class="fw-bold">配送先住所</span></div>
-                <div class="card-body">
-                    <table>
-                        <tr>
-                            <th>氏名:</th>
-                            <td>{{ address.last_name }} {{ address.first_name }}</td>
-                        </tr>
-                        <tr>
-                            <th>郵便番号:</th>
-                            <td>{{ address.zipcode }}</td>
-                        </tr>
-                        <tr>
-                            <th>住所:</th>
-                            <td>
-                                {{ address.get_state_display }} {{ address.city }} {{ address.address1 }}{% if address.address2 %}{{ address.address2 }}{% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>電話番号:</th>
-                            <td>{{ address.phone }}</td>
-                        </tr>
-                    </table>
-                    <a href="{% url 'orders:address_select' %}">変更</a>
-                </div>
-            </div>
-            <div class="card mt-4">
-                <div class="card-header"><span class="fw-bold">商品一覧</span></div>
-                <div class="card-body">
-                    {% for book in cart_list %}
-                    <div class="row my-3">
-                        <div class="col-3">
-                            <a href="{{ book.product.get_absolute_url }}"><img src="{{ book.product.image.url }}" alt="{{ book.name }}" class="img-fluid"></a>
-                        </div>
-                        <div class="col-9">
-                            <p><a href="{{ book.product.get_absolute_url }}">{{ book.product.name }}</a></p>
-                            <p>{{ book.product.price }}円</p>
-                            <p>数量: {{ book.quantity }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+<h1>注文内容の確認</h1>
+<hr>
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header"><span class="fw-bold">配送先住所</span></div>
+            <div class="card-body">
+                <table>
+                    <tr>
+                        <th>氏名:</th>
+                        <td>{{ address.last_name }} {{ address.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>郵便番号:</th>
+                        <td>{{ address.zipcode }}</td>
+                    </tr>
+                    <tr>
+                        <th>住所:</th>
+                        <td>
+                            {{ address.get_state_display }} {{ address.city }} {{ address.address1 }}{% if address.address2 %}{{ address.address2 }}{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>電話番号:</th>
+                        <td>{{ address.phone }}</td>
+                    </tr>
+                </table>
+                <a href="{% url 'orders:address_select' %}">変更</a>
             </div>
         </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-header"><span class="fw-bold">合計金額</span></div>
-                <div class="card-body">
-                    <p class="display-6 text-end">{{ total }}円</p>
-                    <form class="text-center" method="post">
-                        {% csrf_token %}
-                        <button class="btn btn-danger btn-lg" type="submit">注文を確定する</button>
-                    </form>
+        <div class="card mt-4">
+            <div class="card-header"><span class="fw-bold">商品一覧</span></div>
+            <div class="card-body">
+                {% for book in cart_list %}
+                <div class="row my-3">
+                    <div class="col-3">
+                        <a href="{{ book.product.get_absolute_url }}"><img src="{{ book.product.image.url }}" alt="{{ book.name }}" class="img-fluid"></a>
+                    </div>
+                    <div class="col-9">
+                        <p><a href="{{ book.product.get_absolute_url }}">{{ book.product.name }}</a></p>
+                        <p>{{ book.product.price }}円</p>
+                        <p>数量: {{ book.quantity }}</p>
+                    </div>
                 </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header"><span class="fw-bold">合計金額</span></div>
+            <div class="card-body">
+                <p class="display-6 text-end">{{ total }}円</p>
+                <form class="text-center" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-lg" type="submit">注文を確定する</button>
+                </form>
             </div>
         </div>
     </div>

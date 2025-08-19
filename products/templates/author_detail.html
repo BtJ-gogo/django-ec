@@ -4,52 +4,50 @@
 {% block title %}{{ author.name }}の紹介ページ{% endblock %}
 
 {% block content %}
-<div class="container pt-4">
-    <h1>{{ author.name }}</h1>
-    {% if author.bio %}
-    <h3>著者紹介</h3>
-    <p>{{ author.bio }}</p>
-    {% endif %}
-    <h1>著作一覧</h1>
-    <div class="row">
-        {% for book in page_obj %}
-        <div class="col-xl-4 col-md-6 col-sm-12 d-flex">
-            <div class="card mb-4">
-                <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top img-author" alt="{{ book.name }}"></a>
-                <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
-                <p class="card-text">{{ book.author }}</p>
-                <p class="card-text">{{ book.price }}円</p>
-                <p class="card-text">{{ book.category }}</p>
-            </div>
+<h1>{{ author.name }}</h1>
+{% if author.bio %}
+<h3>著者紹介</h3>
+<p>{{ author.bio }}</p>
+{% endif %}
+<h1>著作一覧</h1>
+<div class="row">
+    {% for book in page_obj %}
+    <div class="col-xl-4 col-md-6 col-sm-12 d-flex">
+        <div class="card mb-4">
+            <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top img-author" alt="{{ book.name }}"></a>
+            <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
+            <p class="card-text">{{ book.author }}</p>
+            <p class="card-text">{{ book.price }}円</p>
+            <p class="card-text">{{ book.category }}</p>
         </div>
-        {% endfor %}
+    </div>
+    {% endfor %}
 
-    {% if page_obj.paginator.num_pages > 1 %}
-    <ul class="pagination justify-content-center">
-        <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
-            {% if page_obj.has_previous %}
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            </a>
-            {% else %}
-            <span class="page-link" aria-hidden="true">&laquo;</span>
-            {% endif %}
-        </li>
-        {% for i in page_obj.paginator.page_range %}
-        <li class="page-item {% if i == page_obj.number %}active{% endif %}">
-            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-        </li>
-        {% endfor %}
-        <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
-            {% if page_obj.has_next %}
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            </a>
-            {% else %}
-            <span class="page-link" aria-hidden="true">&raquo;</span>
-            {% endif %}
-        </li>
-    </ul>
-    {% endif %}
-</div>
+{% if page_obj.paginator.num_pages > 1 %}
+<ul class="pagination justify-content-center">
+    <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+        {% if page_obj.has_previous %}
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        </a>
+        {% else %}
+        <span class="page-link" aria-hidden="true">&laquo;</span>
+        {% endif %}
+    </li>
+    {% for i in page_obj.paginator.page_range %}
+    <li class="page-item {% if i == page_obj.number %}active{% endif %}">
+        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+    </li>
+    {% endfor %}
+    <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+        {% if page_obj.has_next %}
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        </a>
+        {% else %}
+        <span class="page-link" aria-hidden="true">&raquo;</span>
+        {% endif %}
+    </li>
+</ul>
+{% endif %}
 {% endblock %}
