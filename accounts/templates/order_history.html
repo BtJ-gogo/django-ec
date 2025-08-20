@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% load humanize %}
 
 {% block title %}注文履歴{% endblock %}
@@ -54,7 +55,7 @@
             <div class="w-75">
                 {% for item in order.orderitem_set.all %}
                 <div class="d-flex flex-column flex-lg-row mt-3 ">
-                    <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-order me-3"></a>
+                    <a href="{{ item.product.get_absolute_url }}"><img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ item.product.name }}" class="img-order me-3"></a>
                     <div>
                         <a href="{{ item.product.get_absolute_url }}"><h5 class="card-title">{{ item.product.name }}</h5></a>
                         <p class="card-text">価格: {{ item.price|intcomma }}円</p>
