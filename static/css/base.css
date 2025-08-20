@@ -26,3 +26,8 @@
 .w-card-list {
     max-width: 300px;
 }
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+}

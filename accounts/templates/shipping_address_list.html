@@ -13,7 +13,7 @@
 </div>
 <div class="row">
     {% for address in object_list %}
-    <div class="col-sm-6 col-md-4 d-flex">
+    <div class="col-sm-6 col-lg-4 d-flex">
         <div class="card flex-fill flex-column mb-3">
             <div class="card-body">
                 {% if address.is_default %}<p class="card-text text-end text-danger my-0"><small>デフォルト</small></p>{% else %}<p class="card-text text-end text-secondary my-0"><small>デフォルトに変更する</small></p>{% endif %}

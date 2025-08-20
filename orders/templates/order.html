@@ -6,7 +6,7 @@
 <h1>注文内容の確認</h1>
 <hr>
 <div class="row">
-    <div class="col-8">
+    <div class="col-lg-8">
         <div class="card">
             <div class="card-header"><span class="fw-bold">配送先住所</span></div>
             <div class="card-body">
@@ -51,14 +51,14 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-lg-4">
         <div class="card">
             <div class="card-header"><span class="fw-bold">合計金額</span></div>
             <div class="card-body">
                 <p class="display-6 text-end">{{ total }}円</p>
                 <form class="text-center" method="post">
                     {% csrf_token %}
-                    <button class="btn btn-danger btn-lg" type="submit">注文を確定する</button>
+                    <button class="btn btn-danger btn-lg text-nowrap" type="submit">注文を確定する</button>
                 </form>
             </div>
         </div>
