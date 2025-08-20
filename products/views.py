@@ -55,7 +55,6 @@ class BookDetailView(SearchRedirectMixin, DetailView):
     model = Book
     template_name = "book_detail.html"
     context_object_name = "book"
-    search_redirect_url_name = "products:book_list"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,6 +66,11 @@ class BookDetailView(SearchRedirectMixin, DetailView):
 
         favorite = self.object.favorite_set.filter(user=self.request.user).exists()
         context["favorite"] = favorite
+
+        books = Book.objects.filter(author=self.object.author).exclude(
+            pk=self.object.pk
+        )[:5]
+        context["other_books"] = books
 
         return context
 
