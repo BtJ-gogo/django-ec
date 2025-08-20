@@ -5,10 +5,10 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-4 text-center">
-        <img src="{{ book.image.url }}" alt="{{ book.name }}" class="img-fluid">
+    <div class="col-lg-5 text-center">
+        <img src="{{ book.image.url }}" alt="{{ book.name }}" class="img-fluid img-book-detail">
     </div>
-    <div class="col-md-5">
+    <div class="col-lg-4">
         <h3>{{ book.name }}</h3>
         <p><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a>(著)</p>
         <hr>
@@ -31,12 +31,12 @@
             </tr>
         </table>
     </div>
-    <div class="col-md-3 text-center pt-4 border rounded">
+    <div class="col-lg-3 text-center pt-4 border rounded">
         {% if form %}
         <form method="post" action="{% url "carts:add_cart" book.pk %}" class="mb-3">
             {% csrf_token %}            
             {{ form }}
-            <button class="btn btn-danger btn-lg mt-3 w-100" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
+            <button class="btn btn-danger btn-lg mt-3 text-nowrap" type="submit"><i class="bi bi-cart"></i> カートに入れる</button>
         </form>
         {% else %}
         <p class="text-danger">現在在庫切れです。</p>
@@ -44,9 +44,9 @@
         <form method="post" action="{% url 'products:favorite_toggle' book.pk %}">
             {% csrf_token %}
             {% if favorite %}
-            <button class="btn btn-primary w-100" type="submit"><i class="bi bi-star"></i> お気に入りから削除</button>
+            <button class="btn btn-primary text-nowrap" type="submit"><i class="bi bi-star"></i> お気に入りから削除</button>
             {% else %}
-            <button class="btn btn-warning w-100" type="submit"><i class="bi bi-star-fill"></i> お気に入りに追加</button>
+            <button class="btn btn-warning text-nowrap" type="submit"><i class="bi bi-star-fill"></i> お気に入りに追加</button>
             {% endif %}
         </form>
     </div>
@@ -54,7 +54,27 @@
 <div class="row mt-4">
     <h3>著者のその他の作品</h3>
     <div class="col-12">
-        ここにカードで何件か表示。
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="{{ book.image.url }}" class="d-block mx-auto img-product border" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ book.image.url }}" class="d-block mx-auto img-product" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ book.image.url }}" class="d-block mx-auto img-product" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </div>
 </div>
 {% endblock %}

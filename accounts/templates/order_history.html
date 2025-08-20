@@ -50,10 +50,10 @@
     </div>
     <div class="card-body">
         <h3><span class="badge bg-warning text-dark">{{ order.get_shipping_status_display }}</span></h3>
-        <div class="d-flex flex-column flex-md-row">
+        <div class="d-flex flex-column flex-lg-row">
             <div class="w-75">
                 {% for item in order.orderitem_set.all %}
-                <div class="d-flex flex-column flex-md-row mt-3 ">
+                <div class="d-flex flex-column flex-lg-row mt-3 ">
                     <a href="{{ item.product.get_absolute_url }}"><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-order me-3"></a>
                     <div>
                         <a href="{{ item.product.get_absolute_url }}"><h5 class="card-title">{{ item.product.name }}</h5></a>
@@ -65,7 +65,7 @@
             </div> 
             <div>
                 <p class="card-text">合計: {{ order.total_price|intcomma }}円</p>
-                <a href="{% url 'accounts:order_detail' order.id %}" class="btn btn-primary">注文詳細</a>
+                <a href="{% url 'accounts:order_detail' order.id %}" class="btn btn-primary text-nowrap">注文詳細</a>
             </div>
         </div>         
     </div>
