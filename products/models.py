@@ -37,7 +37,7 @@ class Book(models.Model):
     publication_date = models.DateField()
     price = models.IntegerField()
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to="book_image/")
+    image = models.ImageField(upload_to="book_image/", blank=True)
     stock = models.PositiveSmallIntegerField()
     status = models.CharField(max_length=2, choices=Status, default=Status.DRAFT)
 
