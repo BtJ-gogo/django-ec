@@ -55,17 +55,13 @@
 <div class="row mt-4">
     <h3>著者のその他の作品</h3>
     <div class="col-12">
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleAutoplaying" class="carousel slide carousel-dark" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                <img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="d-block mx-auto" alt="...">
+                {% for other_book in other_books %}
+                <div class="carousel-item{% if forloop.counter == 1 %} active{% endif %}">
+                    <a href="{{ other_book.get_absolute_url }}"><img src="{% if other_book.image %}{{ other_book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="d-block mx-auto" alt="other_book.name"></a>
                 </div>
-                <div class="carousel-item">
-                    <img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="d-block mx-auto" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="d-block mx-auto" alt="...">
-                </div>
+                {% endfor %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
