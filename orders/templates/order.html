@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% load humanize %}
+
 {% block title %}注文内容の確認{% endblock %}
 
 {% block content %}
@@ -39,11 +42,11 @@
                 {% for book in cart_list %}
                 <div class="row my-3">
                     <div class="col-3">
-                        <a href="{{ book.product.get_absolute_url }}"><img src="{{ book.product.image.url }}" alt="{{ book.name }}" class="img-fluid"></a>
+                        <a href="{{ book.product.get_absolute_url }}"><img src="{% if book.product.image %}{{ book.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ book.name }}" class="img-fluid"></a>
                     </div>
                     <div class="col-9">
                         <p><a href="{{ book.product.get_absolute_url }}">{{ book.product.name }}</a></p>
-                        <p>{{ book.product.price }}円</p>
+                        <p>{{ book.product.price|intcomma }}円</p>
                         <p>数量: {{ book.quantity }}</p>
                     </div>
                 </div>
@@ -55,7 +58,7 @@
         <div class="card">
             <div class="card-header"><span class="fw-bold">合計金額</span></div>
             <div class="card-body">
-                <p class="display-6 text-end">{{ total }}円</p>
+                <p class="display-6 text-end">{{ total|intcomma }}円</p>
                 <form class="text-center" method="post">
                     {% csrf_token %}
                     <button class="btn btn-danger btn-lg text-nowrap" type="submit">注文を確定する</button>

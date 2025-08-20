@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% load humanize %}
 
 {% block title %}{{ author.name }}の紹介ページ{% endblock %}
@@ -16,7 +17,7 @@
     {% for book in page_obj %}
     <div class="col-xl-4 col-md-6 col-sm-12 d-flex">
         <div class="card mb-4">
-            <a href="{{ book.get_absolute_url }}"><img src="{{ book.image.url }}" class="card-img-top img-author" alt="{{ book.name }}"></a>
+            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top img-author" alt="{{ book.name }}"></a>
             <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
             <p class="card-text">{{ book.author }}</p>
             <p class="card-text">{{ book.price }}円</p>

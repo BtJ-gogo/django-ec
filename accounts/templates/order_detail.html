@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% load humanize %}
 
 {% block title %}注文詳細{% endblock %}
@@ -66,7 +67,7 @@
                 <h3><span class="badge bg-warning text-dark">{{ object.get_shipping_status_display }}</span></h3>
                 {% for item in object.orderitem_set.all %}
                 <div class="d-flex flex-column flex-lg-row mt-3">
-                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-cart me-3">
+                    <img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{ item.product.name }}" class="img-cart me-3">
                     <div class="d-flex flex-column flex-lg-row justify-content-between w-75">
                     <div>
                         <p><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></p>

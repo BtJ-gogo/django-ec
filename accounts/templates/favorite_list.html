@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% load humanize %}
+
 {% block title %}お気に入りリスト{% endblock %}
 
 {% block content %}
@@ -14,13 +17,13 @@
     <div class="col-lg-10">
         <div class="card mb-3 d-flex flex-md-row">
             <div class="text-center align-self-center">
-                <a href="{{ product.product.get_absolute_url }}"><img src="{{ product.product.image.url }}" class="img-cart" alt="{{ product.name }}"></a>
+                <a href="{{ product.product.get_absolute_url }}"><img src="{% if product.product.image %}{{ product.product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="img-cart" alt="{{ product.name }}"></a>
             </div>
             <div class="card-body d-flex flex-column flex-lg-row justify-content-between">
                 <div>
                     <a href="{{ product.product.get_absolute_url }}"><p class="card-title">{{ product.product.name }}</p></a>
                     <a href="{{ product.product.author.get_absolute_url }}"><p class="card-text">{{ product.product.author.name }}</a>(著)</p>
-                    <p class="card-text">{{ product.product.price }}円</p>
+                    <p class="card-text">{{ product.product.price|intcomma }}円</p>
                     <p class="card-text"><small class="text-body-secondary">{{ product.created_at|date:"Y年n月j日" }}に追加されました。</small></p>
                 </div>
                 <div>
