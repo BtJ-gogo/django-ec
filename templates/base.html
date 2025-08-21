@@ -12,13 +12,13 @@
     <body>
         <header>
             <nav class="navbar navbar-dark bg-dark navbar-expand-md px-4">
-                <a href="{% url 'products:book_list' %}" class="navbar-brand">Django EC Site</a>
+                <a href="{% url 'pages:home' %}" class="navbar-brand">Django EC Site</a>
                 <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navLinks">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navLinks">
                     <form class="d-flex" method="get">
-                        <input class="form-control me-2" type="search" name="search" value="{{ request.GET.search|default:'' }}" />
+                        <input class="form-control me-2" type="search" name="search" value="{{ request.GET.search|default:'' }}" placeholder="タイトルまたは著者名で検索" aria-label="Search">
                         <button class="btn btn-outline-light text-nowrap" type="submit">キーワード検索</button>
                     </form>
                     <div class="navbar-nav ms-auto">
