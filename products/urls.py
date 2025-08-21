@@ -11,9 +11,4 @@ urlpatterns = [
     path("books/<int:pk>/", BookDetailView.as_view(), name="book_detail"),
     path("books/", BookListView.as_view(), name="book_list"),
     path("books/<str:category>/", BookListView.as_view(), name="book_list"),
-    path(
-        "",
-        TemplateView.as_view(template_name="product_home.html"),
-        name="product_home",
-    ),
 ]
