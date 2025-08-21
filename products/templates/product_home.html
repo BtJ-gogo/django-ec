@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
-<h1>Product Home</h1>
+<img class="img-fluid" src="{% static 'img\1181362_l.png' %}" alt="Product Home Image" />
 <ul>
     <li><a href="{% url "products:book_list" %}">Book List</a></li>
 </ul>
