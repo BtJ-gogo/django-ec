@@ -10,21 +10,6 @@ from accounts.models import Favorite
 from .forms import AddCartForm
 
 
-class SearchMixin:
-    search_param = "search"
-
-    def get_queryset(self):
-        search = self.request.GET.get(self.search_param)
-        book_list = Book.objects.all()
-        if search:
-            book_list = book_list.filter(
-                Q(name__icontains=search)
-                | Q(author__kana_name__icontains=search)
-                | Q(author__name__icontains=search)
-            )
-        return book_list
-
-
 class SearchRedirectMixin:
     search_param = "search"
     search_redirect_url_name = "products:book_list"
@@ -39,16 +24,27 @@ class SearchRedirectMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
-class BookListView(SearchMixin, ListView):
+class BookListView(ListView):
     model = Book
     template_name = "book_list.html"
     paginate_by = 20
 
     def get_queryset(self):
+        book_list = Book.objects.all()
+
+        search = self.request.GET.get("search")
+        if search:
+            book_list = book_list.filter(
+                Q(name__icontains=search)
+                | Q(author__kana_name__icontains=search)
+                | Q(author__name__icontains=search)
+            )
+
         category = self.kwargs.get("category")
         if category:
-            return Book.objects.filter(category__name=category)
-        return Book.objects.all()
+            return book_list.filter(category__name=category)
+
+        return book_list
 
 
 class BookDetailView(SearchRedirectMixin, DetailView):
