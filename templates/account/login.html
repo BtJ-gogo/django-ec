@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
+{% block title %}ログイン{% endblock %}
+
 {% block content %}
-<h2>Log in to Django EC Site</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Log In</button>
-</form>
+<h2 class="mb-">Django EC Site にログイン</h2>
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <form method="post">
+                {% csrf_token %}                
+                <label for="{{ form.login.id_for_label }}">{{ form.login.label }}</label>
+                {{ form.login|add_class:"form-control mb-3" }}
+                {% for error in form.login.errors %}
+                    <small class="text-danger d-block">{{ error }}</small>
+                {% endfor %}
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                {{ form.password|add_class:"form-control mb-3" }}
+                {% for error in form.password.errors %}
+                    <small class="text-danger d-block">{{ error }}</small>
+                {% endfor %}
+                <button class="btn btn-dark mb-2" type="submit">Log In</button>
+            </form>
+            <p><a href="{% url 'account_reset_password' %}">パスワードをお忘れの方 ></a></p>
+        </div>
+    </div>
+</div>
 {% endblock %}
