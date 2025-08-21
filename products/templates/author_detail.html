@@ -15,7 +15,7 @@
 <hr>
 <div class="row">
     {% for book in page_obj %}
-    <div class="col-xl-4 col-md-6 col-sm-12 d-flex">
+    <div class="col-xl-3 col-md-6 col-sm-12 d-flex">
         <div class="card mb-4">
             <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top img-author" alt="{{ book.name }}"></a>
             <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
