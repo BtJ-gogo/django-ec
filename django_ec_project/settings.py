@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "widget_tweaks",
     # local
+    "pages",
     "products",
     "carts",
     "orders",
