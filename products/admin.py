@@ -11,7 +11,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ["name", "author", "price", "stock", "publication_date", "category"]
+    list_display = ["name", "author", "price", "stock", "published_at", "category"]
     list_editable = ["price", "stock"]
 
 
