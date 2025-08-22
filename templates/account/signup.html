@@ -1,10 +1,44 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
+{% block title %}新規登録{% endblock %}
+
 {% block content %}
-<h2>Sign Up to Django EC Site</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Sign Up</button>
-</form>
+<h2>Django EC Siteに新規登録する</h2>
+<div class="row">
+    <div class="col-md-5">
+        <div class="card p-1">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    {{ form.email|add_class:"form-control mb-3" }}
+                    {% for error in form.email.errors %}
+                    <small class="text-danger d-block">{{ error }}</small>
+                    {% endfor %}
+                    <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                    {{ form.password1|add_class:"form-control mb-3" }}
+                    {% for error in form.password1.errors %}
+                    <small class="text-danger d-block">{{ error }}</small>
+                    {% endfor %}
+                    <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                    {{ form.password2|add_class:"form-control mb-3" }}
+                    {% for error in form.password2.errors %}
+                    <small class="text-danger d-block">{{ error }}</small>
+                    {% endfor %}
+                    <small id="id_password1_helptext">
+                    <ul class="list-unstyled">
+                        <li>パスワードは個人情報と似すぎないようにしてください。</li>
+                        <li>8 文字以上で設定してください。</li>
+                        <li>よく使われる簡単なパスワードは使用できません。</li>
+                        <li>数字だけのパスワードは使用できません</li>
+                    </ul>
+                    </small>
+                    <button class="btn btn-primary" type="submit">新規登録</button>
+                </form>
+            </div>
+        </div>        
+    </div>
+</div>
 {% endblock %}

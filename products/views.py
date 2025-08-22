@@ -63,7 +63,8 @@ class BookDetailView(SearchRedirectMixin, DetailView):
         if self.request.user.is_authenticated:
             favorite = self.object.favorite_set.filter(user=self.request.user).exists()
             context["favorite"] = favorite
-        context["favorite"] = None
+        else:
+            context["favorite"] = None
 
         books = Book.objects.filter(author=self.object.author).exclude(
             pk=self.object.pk
