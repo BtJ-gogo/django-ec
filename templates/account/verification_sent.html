@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load allauth %}
+{% block title %}メールアドレスの確認{% endblock title %}
+{% block content %}
+<h1>メールアドレスの確認</h1>
+<div class="row">
+    <div class="col-md-5">
+        <ul class="list-unstyled">
+            <li>確認用のメールを送信しました。</li>
+            <li class="mb-2">記載されているリンクをクリックして、登録手続きを完了してください。</li>
+            <li class="mb-2">メインの受信トレイに確認メールが見つからない場合は、迷惑メールフォルダをご確認ください。</li>
+            <li>数分以内に確認メールが届かない場合は、お問い合わせください。</li>
+        </ul>      
+    </div>
+</div>
+{% endblock content %}
