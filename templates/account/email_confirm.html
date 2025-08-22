@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load account %}
+{% load allauth %}
+
+{% block title %}
+    メールアドレスの確認
+{% endblock title %}
+
+{% block content %}
+    {% element h1 %}
+        メールアドレスの確認
+    {% endelement %}
+    <div class="row">
+        <div class="col-md-7">
+    {% if confirmation %}        
+        {% user_display confirmation.email_address.user as user_display %}
+        {% if can_confirm %}
+            {% element p %}
+                <p>{{ confirmation.email_address.email }} をご利用のアカウントで間違いありませんか？</p>
+            {% endelement %}
+            {% url 'account_confirm_email' confirmation.key as action_url %}
+            {% element form method="post" action=action_url %}
+                {% slot actions %}
+                    {% csrf_token %}
+                    {{ redirect_field }}
+                    <button type="submit" class="btn btn-primary">
+                        確認する
+                    </button>
+                {% endslot %}
+            {% endelement %}
+        {% else %}
+            <p>{{ email }} はすでに別のアカウントで確認済みのため、このアカウントでは使用できません。</p>
+        {% endif %}
+    {% else %}
+        {% url 'account_email' as email_url %}
+            <p class="m-0">この電子メールの確認リンクは期限が切れているか無効です。</p><p class="m-0"><a href="{{ email_url }}">こちら</a>から新しい確認メールを送信してください。</p>
+    {% endif %}
+        </div>
+    </div>
+{% endblock content %}
