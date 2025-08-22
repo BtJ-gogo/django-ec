@@ -30,6 +30,9 @@
                         <a href="{% url "account_logout" %}" class="nav-item nav-link">ログアウト</a>
                         {% else %}
                         <a href="{% url "account_login" %}" class="nav-item nav-link">ログイン</a>
+                        <a href="{% url "account_signup" %}" class="nav-item nav-link">新規登録</a>
+                        {% endif %}
+                        {% if user.is_staff %}
                         {% endif %}
                     </div>
                 </div>
