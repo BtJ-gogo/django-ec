@@ -49,3 +49,6 @@ python manage.py createsuperuser
 
 # 開発サーバー起動
 python manage.py runserver
+
+## 画像について
+- トップページの画像はUnsplashにあったもをリサイズして利用しております。
