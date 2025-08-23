@@ -33,9 +33,6 @@ Django で構築した書籍販売向け Web アプリケーションです。
 ## セットアップ方法
 
 ```bash
-# リポジトリを取得
-git clone <your-repo-url>
-cd <your-project-folder>
 
 # 仮想環境作成 & 有効化
 python -m venv venv
