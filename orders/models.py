@@ -37,7 +37,10 @@ class Order(models.Model):
     stripe_id = models.CharField(max_length=250, blank=True)
 
     class Meta:
-        ordering = ["-date"]
+        ordering = ["-date", "-id"]
+
+    def __str__(self):
+        return f"注文ID{self.id}"
 
 
 class OrderItem(models.Model):
@@ -48,3 +51,6 @@ class OrderItem(models.Model):
 
     def get_total_price(self):
         return self.price * self.quantity
+
+    def __str__(self):
+        return self.product.name

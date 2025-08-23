@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import CustomUser, ShippingAddress, Favorite
+from .models import CustomUser
 
 
-# Register your models here.
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = list_display = (
+    list_display = (
         "username",
         "email",
         "first_name",
@@ -24,13 +23,3 @@ class CustomUserAdmin(admin.ModelAdmin):
         "last_name",
         "email",
     )
-
-
-@admin.register(ShippingAddress)
-class ShippingAdressAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Favorite)
-class FavoriteAdmin(admin.ModelAdmin):
-    pass

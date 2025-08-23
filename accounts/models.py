@@ -5,7 +5,6 @@ from django.conf import settings
 from products.models import Book
 
 
-# Create your models here.
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, blank=False)
 
