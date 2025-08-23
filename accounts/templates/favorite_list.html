@@ -10,7 +10,7 @@
 <hr>
 <div class="row">
     {% if not object_list %}
-        <p class="alert alert-warning text-center">お気に入りの商品はありません。</p>
+        <p class="alert alert-warning">お気に入りの商品はありません。</p>
         <p class="text-center"><a href="{% url 'products:book_list' %}">トップへ</a></p>
     {% endif %}
     {% for product in object_list %}
