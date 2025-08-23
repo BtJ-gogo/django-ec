@@ -10,8 +10,10 @@
 <hr>
 <div class="row">
     {% if not object_list %}
+    <div class="col">
         <p class="alert alert-warning">お気に入りの商品はありません。</p>
         <p class="text-center"><a href="{% url 'products:book_list' %}">トップへ</a></p>
+    </div>
     {% endif %}
     {% for product in object_list %}
     <div class="col-lg-10">
