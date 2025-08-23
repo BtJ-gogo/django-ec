@@ -39,6 +39,9 @@ class Order(models.Model):
     class Meta:
         ordering = ["-date"]
 
+    def __str__(self):
+        return f"注文ID{self.id}"
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -48,3 +51,6 @@ class OrderItem(models.Model):
 
     def get_total_price(self):
         return self.price * self.quantity
+
+    def __str__(self):
+        return self.product.name
