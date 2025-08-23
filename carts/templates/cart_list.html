@@ -9,7 +9,7 @@
 <h1>ショッピングカート</h1>
 <hr>
 {% if not object_list %}
-<p class="alert alert-warning text-center">商品が入っていません</p>
+<p class="alert alert-warning">商品が入っていません</p>
 <p class="text-center"><a href="{% url 'products:book_list' %}">トップへ</a></p>
 {% endif %}
 <div class="row">
