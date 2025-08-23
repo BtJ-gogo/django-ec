@@ -1,28 +1,32 @@
-# Book Store Application
+# Django EC Project
 
 Django で構築した書籍販売向け Web アプリケーションです。  
-ユーザーはアカウントを作成し、商品（書籍）を閲覧・お気に入り登録できます。  
+商品閲覧からカート、注文、Stripe 決済まで、一通りの購買フローを実装しています。  
 
 ## 主な機能
 
 - ユーザー認証（[django-allauth](https://django-allauth.readthedocs.io/en/latest/) 利用）
-- 商品（書籍）一覧ページ / 詳細ページ
+- 商品一覧・詳細表示
 - 簡易検索機能
-  - 書籍名、著者名による検索
-- お気に入り登録・解除機能  
-  - ワンクリックでお気に入りの追加/削除が可能  
+- お気に入り機能  
 - カート機能
-- Stripe決済機能
-- 購入履歴
-- 配送先住所管理
+- Stripe決済
+- 購入履歴の表示
+- 配送先住所登録・管理
+- Django Admin による商品管理
 
-## 動作環境
+## 使用技術
 
-- Python 3.11+
-- Django 5.x
-- SQLite (開発用)
-- Bootstrap 5 (フロントエンドデザイン)
-- allauth (ユーザー管理)
+- フロントエンド
+  - Bootstrap 5.3
+  - django-widget-tweaks
+- バックエンド
+  - django
+  - django-allauth
+  - stripe
+  - python-decouple
+- データベース
+  - SQLite
 
 ## セットアップ方法
 
