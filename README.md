@@ -21,12 +21,14 @@ Django で構築した書籍販売向け Web アプリケーションです。
   - Bootstrap 5.3
   - django-widget-tweaks
 - バックエンド
-  - django
+  - Django 5.2.4
   - django-allauth
   - stripe
   - python-decouple
 - データベース
   - SQLite
+- プログラミング言語
+  - Python 3.13
 
 ## セットアップ方法
 
