@@ -14,7 +14,7 @@ class AuthorAdmin(admin.ModelAdmin):
 class BookAdmin(admin.ModelAdmin):
     list_display = ["name", "author", "price", "stock", "published_at", "category"]
     list_editable = ["price", "stock"]
-    search_fields = ["name", "author"]
+    search_fields = ["name", "author__name"]
     list_filter = ["category"]
     ordering = ["price", "stock", "published_at"]
 

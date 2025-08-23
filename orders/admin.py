@@ -19,6 +19,7 @@ class OrderAdmin(admin.ModelAdmin):
         "total_price",
     ]
     list_editable = ["payment_status", "shipping_status"]
-    search_fields = ["id", "user", "date"]
+    search_fields = ["id", "user__username", "date"]
     list_filter = ["payment_status", "shipping_status"]
+    date_hierarchy = "date"
     inlines = [OrderItemInline]
