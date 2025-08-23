@@ -28,7 +28,10 @@ Django で構築した書籍販売向け Web アプリケーションです。
 - データベース
   - SQLite
 - プログラミング言語
-  - Python 3.13
+  - Python 3.13  
+
+## 画像について
+- トップページの画像はUnsplashにあったもをリサイズして利用しております。
 
 ## セットアップ方法
 
@@ -50,5 +53,3 @@ python manage.py createsuperuser
 # 開発サーバー起動
 python manage.py runserver
 
-## 画像について
-- トップページの画像はUnsplashにあったもをリサイズして利用しております。
