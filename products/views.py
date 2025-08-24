@@ -30,7 +30,11 @@ class BookListView(SearchRedirectMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        book_list = Book.objects.all()
+        book_list = Book.objects.select_related("author", "category")
+
+        category = self.kwargs.get("category")
+        if category:
+            return book_list.filter(category__name=category)
 
         search = self.request.GET.get("search")
         if search:
@@ -39,10 +43,6 @@ class BookListView(SearchRedirectMixin, ListView):
                 | Q(author__kana_name__icontains=search)
                 | Q(author__name__icontains=search)
             )
-
-        category = self.kwargs.get("category")
-        if category:
-            return book_list.filter(category__name=category)
 
         return book_list
 
