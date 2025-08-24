@@ -45,7 +45,7 @@ class OrderView(LoginRequiredMixin, SearchRedirectMixin, View):
                 f"{reverse('accounts:shipping_add')}?next={reverse('orders:order')}"
             )
         # カート情報
-        cart_list = Cart.objects.filter(user=self.request.user).prefetch_related(
+        cart_list = Cart.objects.filter(user=self.request.user).select_related(
             "product"
         )
         # 合計金額
