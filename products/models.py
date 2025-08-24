@@ -34,7 +34,7 @@ class Book(models.Model):
     name = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
     publisher = models.CharField(max_length=50)
-    published_at = models.DateField()
+    published_at = models.DateField(db_index=True)
     price = models.IntegerField()
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="book_image/", blank=True)

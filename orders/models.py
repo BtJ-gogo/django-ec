@@ -38,6 +38,9 @@ class Order(models.Model):
 
     class Meta:
         ordering = ["-date", "-id"]
+        indexes = [
+            models.Index(fields=["-date", "-id"]),
+        ]
 
     def __str__(self):
         return f"注文ID{self.id}"
