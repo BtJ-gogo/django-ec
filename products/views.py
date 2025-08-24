@@ -24,7 +24,7 @@ class SearchRedirectMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
-class BookListView(ListView):
+class BookListView(SearchRedirectMixin, ListView):
     model = Book
     template_name = "book_list.html"
     paginate_by = 20
