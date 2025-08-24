@@ -72,6 +72,11 @@ class ShippingAddress(models.Model):
     address2 = models.CharField(max_length=50, blank=True)
     is_default = models.BooleanField(default=False)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["user", "is_default"]),
+        ]
+
 
 class Favorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
