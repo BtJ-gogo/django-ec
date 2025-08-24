@@ -24,6 +24,7 @@ Django で構築した書籍販売向け Web アプリケーションです。
   - Django 5.2.4
   - django-allauth
   - stripe
+  - Pillow
   - python-decouple
 - データベース
   - SQLite
