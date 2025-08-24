@@ -30,7 +30,11 @@ class BookListView(SearchRedirectMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        book_list = Book.objects.all()
+        book_list = Book.objects.select_related("author", "category")
+
+        category = self.kwargs.get("category")
+        if category:
+            return book_list.filter(category__name=category)
 
         search = self.request.GET.get("search")
         if search:
@@ -40,10 +44,6 @@ class BookListView(SearchRedirectMixin, ListView):
                 | Q(author__name__icontains=search)
             )
 
-        category = self.kwargs.get("category")
-        if category:
-            return book_list.filter(category__name=category)
-
         return book_list
 
 
@@ -51,6 +51,9 @@ class BookDetailView(SearchRedirectMixin, DetailView):
     model = Book
     template_name = "book_detail.html"
     context_object_name = "book"
+
+    def get_queryset(self):
+        return Book.objects.select_related("author", "category")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -74,23 +77,13 @@ class BookDetailView(SearchRedirectMixin, DetailView):
         return context
 
 
-class BookCategoryView(SearchRedirectMixin, ListView):
-    model = Book
-    template_name = "book_category.html"
-
-    def get_queryset(self):
-        category = self.kwargs.get("category")
-        return Book.objects.filter(category__name=category)
-
-
 class AuthorDetailView(SearchRedirectMixin, DetailView):
     model = Author
     template_name = "author_detail.html"
     context_object_name = "author"
-    paginate_by = 6
+    paginate_by = 8
     search_redirect_url_name = "products:book_list"
 
-    # get_context_data()で著作一覧を取得して表示するようにする
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         books = context["author"].book_set.all()

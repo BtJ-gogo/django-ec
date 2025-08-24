@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "widget_tweaks",
+    "debug_toolbar",
     # local
     "pages",
     "products",
@@ -65,6 +66,8 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 DEFAULT_FROM_EMAIL = "admin@djangoecsite.com"
 
 MIDDLEWARE = [
+    # debug-toolbar
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -171,3 +174,8 @@ MEDIA_URL = "/media/"
 STRIPE_PUBLISHABLE_KEY = config("STRIPE_PUBLISHABLE_KEY")
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = config("STRIPE_WEBHOOK_SECRET")
+
+# debug-toolbar
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

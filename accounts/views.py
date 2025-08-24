@@ -5,10 +5,11 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.db.models import Prefetch
 
 from .models import ShippingAddress, Favorite
 from .forms import ShippingAddressForm
-from orders.models import Order
+from orders.models import Order, OrderItem
 from products.views import SearchRedirectMixin
 
 
@@ -90,7 +91,16 @@ class OrderHistoryView(LoginRequiredMixin, SearchRedirectMixin, ListView):
     template_name = "order_history.html"
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user).exclude(payment_status="PE")
+        return (
+            Order.objects.filter(user=self.request.user)
+            .exclude(payment_status="PE")
+            .prefetch_related(
+                Prefetch(
+                    "orderitem_set",
+                    queryset=OrderItem.objects.select_related("product"),
+                )
+            )
+        )
 
 
 class OrderDetailView(LoginRequiredMixin, SearchRedirectMixin, DetailView):
@@ -101,7 +111,12 @@ class OrderDetailView(LoginRequiredMixin, SearchRedirectMixin, DetailView):
         return (
             Order.objects.filter(user=self.request.user)
             .exclude(payment_status="PE")
-            .prefetch_related("orderitem_set")
+            .prefetch_related(
+                Prefetch(
+                    "orderitem_set",
+                    queryset=OrderItem.objects.select_related("product"),
+                )
+            )
         )
 
 
@@ -110,7 +125,9 @@ class FavoriteListView(LoginRequiredMixin, SearchRedirectMixin, ListView):
     template_name = "favorite_list.html"
 
     def get_queryset(self):
-        return Favorite.objects.filter(user=self.request.user).select_related("product")
+        return Favorite.objects.filter(user=self.request.user).select_related(
+            "product", "product__author"
+        )
 
 
 class FavoriteDeleteView(LoginRequiredMixin, View):
