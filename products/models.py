@@ -30,9 +30,9 @@ class Book(models.Model):
         DRAFT = "DR", "Draft"
         DELETE = "DE", "Delete"
 
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
     name = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Author, on_delete=models.PROTECT)
     publisher = models.CharField(max_length=50)
     published_at = models.DateField(db_index=True)
     price = models.IntegerField()
