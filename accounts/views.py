@@ -6,6 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.db.models import Prefetch
+from django.contrib import messages
 
 from .models import ShippingAddress, Favorite
 from .forms import ShippingAddressForm
@@ -136,4 +137,7 @@ class FavoriteDeleteView(LoginRequiredMixin, View):
             Favorite, user=self.request.user, product_id=kwargs.get("pk")
         )
         result.delete()
+        messages.success(
+            request, f"{ result.product.name}をお気に入りから削除しました。"
+        )
         return redirect("accounts:favorite_list")

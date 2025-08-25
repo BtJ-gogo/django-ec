@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import Author, Book
 from accounts.models import Favorite
@@ -105,6 +106,9 @@ class FavoriteToggleView(LoginRequiredMixin, View):
             user=self.request.user, product_id=kwargs.get("pk")
         )
         if not created:
+            messages.info(request, f"お気に入りから削除しました。")
             result.delete()
+        else:
+            messages.info(request, f"お気に入りに追加しました。")
 
         return redirect("products:book_detail", pk=kwargs.get("pk"))

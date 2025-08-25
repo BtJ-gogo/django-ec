@@ -37,7 +37,7 @@ class AddCartView(View):
                 )
                 cart.save()
 
-            # messages.success(request, f"カートに追加しました。")
+            messages.success(request, f"{cart.product.name}をカートに追加しました。")
             return redirect(reverse("carts:cart"))
         # これから作成
         else:
@@ -66,17 +66,18 @@ class CartView(SearchRedirectMixin, View):
             view = CartListView.as_view()
             return view(request, *args, **kwargs)
         else:
-            # message入れたほうがいいかも
             return redirect(reverse("account_login"))
 
 
 @require_POST
 def item_delete(request, pk):
     if request.user.is_authenticated:
-        cart = Cart.objects.filter(user=request.user, id=pk)
-        if cart.exists():
-            cart.delete()
-            return redirect("carts:cart")
-        else:
+        try:
+            cart_item = Cart.objects.get(user=request.user, id=pk)
+        except Cart.DoesNotExist:
             messages.warning(request, "カートのアイテムが見つかりませんでした。")
             return redirect("carts:cart")
+        messages.info(request, f"{cart_item.product.name}をカートから削除しました。")
+        cart_item.delete()
+
+        return redirect("carts:cart")
