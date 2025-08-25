@@ -35,8 +35,6 @@
                         <a href="{% url 'account_login' %}" class="nav-item nav-link">ログイン</a>
                         <a href="{% url 'account_signup' %}" class="nav-item nav-link">新規登録</a>
                         {% endif %}
-                        {% if user.is_staff %}
-                        {% endif %}
                     </div>
                 </div>
             </nav>
@@ -59,6 +57,11 @@
                 </div>
             </nav>
             <main class="w-100">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
                 {% block content %}
                 {% endblock %}
             </main>
