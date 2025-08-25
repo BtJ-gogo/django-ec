@@ -86,7 +86,10 @@ class AuthorDetailView(SearchRedirectMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        books = context["author"].book_set.all()
+
+        books = Book.objects.filter(author=context["author"]).select_related(
+            "author", "category"
+        )
         p = Paginator(books, self.paginate_by)
 
         page_number = self.request.GET.get("page")
