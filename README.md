@@ -53,4 +53,9 @@ python manage.py createsuperuser
 
 # 開発サーバー起動
 python manage.py runserver
+```
+## ER 図
 
+以下は本アプリケーションの主要モデルの関係図です。
+
+![ER Diagram](docs/ER.png)
