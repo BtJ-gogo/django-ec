@@ -1,16 +1,16 @@
 # Django EC Project
 
 Django で構築した書籍販売向け Web アプリケーションです。  
-商品閲覧からカート、注文、Stripe 決済まで、一通りの購買フローを実装しています。  
+商品閲覧からカート、注文、Stripe 決済まで、一通りの購買フローを実装しています。
 
 ## 主な機能
 
 - ユーザー認証（[django-allauth](https://django-allauth.readthedocs.io/en/latest/) 利用）
 - 商品一覧・詳細表示
 - 簡易検索機能
-- お気に入り機能  
+- お気に入り機能
 - カート機能
-- Stripe決済
+- Stripe 決済
 - 購入履歴の表示
 - 配送先住所登録・管理
 - Django Admin による商品管理
@@ -29,10 +29,11 @@ Django で構築した書籍販売向け Web アプリケーションです。
 - データベース
   - SQLite
 - プログラミング言語
-  - Python 3.13  
+  - Python 3.13
 
 ## 画像について
-- トップページの画像はUnsplashにあったもをリサイズして利用しております。
+
+- トップページの画像は Unsplash にあったもをリサイズして利用しております。
 
 ## セットアップ方法
 
@@ -54,8 +55,15 @@ python manage.py createsuperuser
 # 開発サーバー起動
 python manage.py runserver
 ```
+
 ## ER 図
 
 以下は本アプリケーションの主要モデルの関係図です。
 
 ![ER Diagram](docs/ER.png)
+
+## 画面遷移図
+
+以下は本アプリケーションの画面遷移図です。
+![Screen Transition Diagram](docs/screen_transition.png)  
+※商品詳細へは買い物かご、お気に入りなど複数の画面からも遷移可能です。
