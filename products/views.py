@@ -5,6 +5,8 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib import messages
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 from .models import Author, Book
 from accounts.models import Favorite
@@ -17,18 +19,21 @@ class SearchRedirectMixin:
 
     def dispatch(self, request, *args, **kwargs):
         search = request.GET.get(self.search_param)
-        if search and self.search_redirect_url_name:
-            redirect_url = (
-                f"{reverse(self.search_redirect_url_name)}?{self.search_param}={search}"
-            )
+        redirect_url = (
+            f"{reverse(self.search_redirect_url_name)}?{self.search_param}={search}"
+        ) if search and self.search_redirect_url_name else None
+
+        if redirect_url and request.get_full_path() != redirect_url:
             return redirect(redirect_url)
+
         return super().dispatch(request, *args, **kwargs)
+
 
 
 class BookListView(SearchRedirectMixin, ListView):
     model = Book
     template_name = "book_list.html"
-    paginate_by = 20
+    paginate_by = 8
 
     def get_queryset(self):
         book_list = Book.objects.select_related("author", "category")
@@ -46,6 +51,26 @@ class BookListView(SearchRedirectMixin, ListView):
             )
 
         return book_list
+
+
+class BookListLoadView(View):
+    def get(self, request, *args, **kwargs):
+        page = int(self.request.GET.get("page", 1))
+        book_list = Book.objects.select_related("author", "category")
+
+        category = self.kwargs.get("category")
+        if category:
+            book_list = book_list.filter(category__name=category)
+
+        paginator = Paginator(book_list, 8)
+        if page > paginator.num_pages:
+            return JsonResponse({"html": "", "has_next": False})
+        page_obj = paginator.get_page(page)
+            
+        html = render_to_string("book_list_items.html", {"object_list": page_obj})
+        return JsonResponse({"html": html, "has_next": page_obj.has_next()})        
+
+
 
 
 class BookDetailView(SearchRedirectMixin, DetailView):

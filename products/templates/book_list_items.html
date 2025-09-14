@@ -1,15 +1,16 @@
-<div class="row">
+{% load static %}
+{% load humanize %}
+
 {% for book in object_list %}
-    <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
-        <div class="card w-card-list mb-4">
-            <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top img-fluid" alt="{{ book.name }}"></a>
-            <div class="card-body">
-                <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
-                <a href="{{ book.author.get_absolute_url }}" class="card-text">{{ book.author }}</a>
-                <p class="card-text">{{ book.price|intcomma }}円</p>
-                <p class="card-text"><a href="{% url 'products:book_list' book.category.name %}">{{ book.category }}</a></p>
-            </div>
+<div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+    <div class="card w-card-list mb-4">
+        <a href="{{ book.get_absolute_url }}"><img src="{% if book.image %}{{ book.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="card-img-top img-fluid" alt="{{ book.name }}"></a>
+        <div class="card-body">
+            <a href="{{ book.get_absolute_url }}" class="card-title d-block">{{ book.name }}</a>
+            <a href="{{ book.author.get_absolute_url }}" class="card-text">{{ book.author }}</a>
+            <p class="card-text">{{ book.price|intcomma }}円</p>
+            <p class="card-text"><a href="{% url 'products:book_list' book.category.name %}">{{ book.category }}</a></p>
         </div>
     </div>
-{% endfor %}
 </div>
+{% endfor %}
