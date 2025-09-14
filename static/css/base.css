@@ -35,6 +35,7 @@
 .max-w-5 {
     max-width: 400px;
 }
+
 .m-link-hover:hover {
   background-color: #b1d5f8; /* 薄いグレー */
   cursor: pointer;
