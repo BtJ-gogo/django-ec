@@ -7,6 +7,7 @@ Django で構築した書籍販売向け Web アプリケーションです。
 
 - ユーザー認証（[django-allauth](https://django-allauth.readthedocs.io/en/latest/) 利用）
 - 商品一覧・詳細表示
+  - 無限スクロール表示
 - 簡易検索機能
 - お気に入り機能
 - カート機能
@@ -19,6 +20,8 @@ Django で構築した書籍販売向け Web アプリケーションです。
 
 - フロントエンド
   - Bootstrap 5.3
+  - JavaScript (ES6+)
+    - 無限スクロール(Fetch API)
   - django-widget-tweaks
 - バックエンド
   - Django 5.2.4
@@ -30,6 +33,7 @@ Django で構築した書籍販売向け Web アプリケーションです。
   - SQLite
 - プログラミング言語
   - Python 3.13
+  - JavaScript (ES6+)
 
 ## 画像について
 
@@ -55,6 +59,11 @@ python manage.py createsuperuser
 # 開発サーバー起動
 python manage.py runserver
 ```
+
+## 画面イメージ
+
+![トップページ](docs/TOP_PAGE.png)
+
 
 ## ER 図
 
