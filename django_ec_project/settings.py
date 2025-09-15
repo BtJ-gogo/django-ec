@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from allauth.account import app_settings
 from decouple import config
 from pathlib import Path
 
@@ -57,9 +58,10 @@ INSTALLED_APPS = [
 SITE_ID = 1
 ACCOUNT_SESSION_REMEMBER = True
 
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = {app_settings.LoginMethod.EMAIL}
+
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+
 ACCOUNT_UNIQUE_EMAIL = True
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
