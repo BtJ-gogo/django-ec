@@ -32,7 +32,6 @@ window.addEventListener("scroll", async () => {
       fetchUrl = `/products/books/load/?page=${page}`;
     }
 
-    console.log("fetchUrl", fetchUrl);
     try {
       const res = await fetch(fetchUrl);
       const data = await res.json();
