@@ -3,6 +3,10 @@ let page = 2;
 let loading = false;
 let hasNext = true;
 
+function getQueryParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
 window.addEventListener("scroll", async () => {
   if (!hasNext || loading) {
     return;
@@ -10,19 +14,31 @@ window.addEventListener("scroll", async () => {
 
   if (window.scrollY + window.innerHeight >= document.body.offsetHeight - 200) {
     loading = true;
-    const urlstring = window.location.pathname;
-    const category = decodeURIComponent(urlstring.split("/")[3]);
+    const urlString = window.location.pathname;
+    const category = decodeURIComponent(urlString.split("/")[3]);
+    const search = getQueryParam("search");
+    console.log(search);
+    
+    let fetchUrl;
+    if (category) {
+      fetchUrl = `/products/books/${category}/load/?page=${page}`;
+    }
+
+    if (search) {
+      fetchUrl = `/products/books/load/?page=${page}&search=${search}`;
+    }
+
+    if (!category && !search) {
+      fetchUrl = `/products/books/load/?page=${page}`;
+    }
+
+    console.log("fetchUrl", fetchUrl);
     try {
-      let res;
-      if (category) {
-        res = await fetch(`/products/books/${category}/load/?page=${page}`);
-      } else {
-        res = await fetch(`/products/books/load/?page=${page}`);
-      }
+      const res = await fetch(fetchUrl);
       const data = await res.json();
       if (!data.html) {
         hasNext = data.has_next;
-        return
+        return;
       }
 
       classRow.insertAdjacentHTML("beforeend", data.html);

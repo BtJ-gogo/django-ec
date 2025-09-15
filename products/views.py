@@ -62,6 +62,14 @@ class BookListLoadView(View):
         if category:
             book_list = book_list.filter(category__name=category)
 
+        search = self.request.GET.get("search")
+        if search:
+            book_list = book_list.filter(
+                Q(name__icontains=search)
+                | Q(author__kana_name__icontains=search)
+                | Q(author__name__icontains=search)
+            )
+
         paginator = Paginator(book_list, 8)
         if page > paginator.num_pages:
             return JsonResponse({"html": "", "has_next": False})
