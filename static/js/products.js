@@ -17,7 +17,6 @@ window.addEventListener("scroll", async () => {
     const urlString = window.location.pathname;
     const category = decodeURIComponent(urlString.split("/")[3]);
     const search = getQueryParam("search");
-    console.log(search);
     
     let fetchUrl;
     if (category) {
