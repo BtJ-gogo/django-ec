@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -20,10 +22,12 @@ class SearchRedirectMixin:
     def dispatch(self, request, *args, **kwargs):
         search = request.GET.get(self.search_param)
         redirect_url = (
-            f"{reverse(self.search_redirect_url_name)}?{self.search_param}={search}"
-        ) if search and self.search_redirect_url_name else None
+            f"{reverse(self.search_redirect_url_name)}?{self.search_param}={quote(search)}"
+        ) if search else None
 
         if redirect_url and request.get_full_path() != redirect_url:
+            print(redirect_url)
+            print(request.get_full_path())
             return redirect(redirect_url)
 
         return super().dispatch(request, *args, **kwargs)
