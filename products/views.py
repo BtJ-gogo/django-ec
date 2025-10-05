@@ -26,8 +26,6 @@ class SearchRedirectMixin:
         ) if search else None
 
         if redirect_url and request.get_full_path() != redirect_url:
-            print(redirect_url)
-            print(request.get_full_path())
             return redirect(redirect_url)
 
         return super().dispatch(request, *args, **kwargs)
