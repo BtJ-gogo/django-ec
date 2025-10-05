@@ -1,8 +1,46 @@
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 
 from accounts.models import CustomUser, Favorite
 from products.models import Book, Author, Category
+
+class CategoryModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.category = Category.objects.create(name='Test Category', slug='test-category')
+
+    def test_str_method(self):
+        self.assertEqual(str(self.category), 'Test Category')
+
+    def test_name(self):
+        self.assertEqual(self.category.name, 'Test Category')
+
+    def test_slug(self):
+        self.assertEqual(self.category.slug, 'test-category')
+
+    def test_unique_name(self):
+        with self.assertRaises(IntegrityError):
+            Category.objects.create(name='Test Category', slug='another-slug')
+    
+    def test_unique_slug(self):
+        with self.assertRaises(IntegrityError):
+            Category.objects.create(name="Another Category", slug='test-category')
+    
+    def test_max_length_name(self):
+        test_data = Category(name="a" * 101 , slug="test-slug")
+        with self.assertRaises(ValidationError):
+            test_data.full_clean()
+
+    def test_max_length_slug(self):
+        test_data = Category(name="Test Category", slug="a" * 101)
+        with self.assertRaises(ValidationError):
+            test_data.full_clean()
+
+
+class AuthorModelTest(TestCase):
+    pass
 
 class FavoriteToggleViewTest(TestCase):
     def setUp(self):
