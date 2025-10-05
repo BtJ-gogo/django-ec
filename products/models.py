@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.urls import reverse
 
 
@@ -22,7 +24,11 @@ class Author(models.Model):
 
     def get_absolute_url(self):
         return reverse("products:author_detail", kwargs={"pk": self.pk})
-
+    
+    def clean(self):
+        super().clean()
+        if self.birth_date > timezone.now().date():
+            raise ValidationError({'birth_date': 'Birth date cannot be in the future.'})0
 
 class Book(models.Model):
     class Status(models.TextChoices):
