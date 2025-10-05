@@ -28,7 +28,7 @@ class Author(models.Model):
     def clean(self):
         super().clean()
         if self.birth_date > timezone.now().date():
-            raise ValidationError({'birth_date': 'Birth date cannot be in the future.'})0
+            raise ValidationError({'birth_date': 'Birth date cannot be in the future.'})
 
 class Book(models.Model):
     class Status(models.TextChoices):
