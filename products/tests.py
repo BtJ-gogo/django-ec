@@ -40,7 +40,56 @@ class CategoryModelTest(TestCase):
 
 
 class AuthorModelTest(TestCase):
-    pass
+    @classmethod
+    def setUpTestData(cls):
+        cls.author = Author.objects.create(name='Test Author', kana_name='テストオーサー', birth_date='2000-01-01', bio='Test bio')
+
+    def test_name(self):
+        self.assertEqual(self.author.name, 'Test Author')
+
+    def test_kana_name(self):
+        self.assertEqual(self.author.kana_name, 'テストオーサー')
+
+    def test_birth_date(self):
+        self.assertEqual(str(self.author.birth_date), '2000-01-01')
+    
+    def test_birth_date_ivalid(self):
+        test_data = Author(name='Test Author', kana_name='テストオーサー', birth_date='2030-10-05', bio='Test bio')
+        with self.assertRaises(ValidationError):
+            test_data.full_clean()
+
+    def test_bio(self):
+        self.assertEqual(self.author.bio, 'Test bio')
+
+    def test_str_method(self):
+        self.assertEqual(str(self.author), 'Test Author')
+
+    def test_get_absolute_url(self):
+        self.assertEqual(self.author.get_absolute_url(), reverse("products:author_detail", kwargs={"pk": self.author.pk}))
+
+    def test_max_length_name(self):
+        test_data = Author(name="a" * 101, kana_name="テストオーサー", birth_date="2000-01-01", bio="Test bio")
+        with self.assertRaises(ValidationError):
+            test_data.full_clean()
+
+    def test_max_lenght_kana_name(self):
+        test_data = Author(name='Test Author', kana_name='a' * 51, birth_date="2000-01-01", bio="Test bio")
+        with self.assertRaises(ValidationError):
+            test_data.full_clean()
+
+    def test_blank_kana_name(self):
+        test_data = Author(name='Test Author', birth_date='2000-02-02', bio='Test bio')
+        test_data.full_clean()
+ 
+    def test_blank_bio(self):
+        test_data = Author(name='Test Author', kana_name='テストオーサー', birth_date='2000-02-02')
+        test_data.full_clean()
+
+    def test_blank_fields(self):
+        test_data = Author(name='Test Author', birth_date='2000-02-02')
+        test_data.full_clean()
+
+
 
 class FavoriteToggleViewTest(TestCase):
     def setUp(self):
