@@ -41,7 +41,7 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.PROTECT)
     publisher = models.CharField(max_length=50)
     published_at = models.DateField(db_index=True)
-    price = models.IntegerField()
+    price = models.PositiveIntegerField()
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="book_image/", blank=True)
     stock = models.PositiveSmallIntegerField()
