@@ -250,7 +250,7 @@ class BookModelTest(TestCase):
                 status=Book.Status.ACTIVE,
             )
             test_data.full_clean()
-    
+
     def test_default_status(self):
         test_data = Book(
             category=self.category,
@@ -264,6 +264,22 @@ class BookModelTest(TestCase):
         )
         test_data.full_clean()
         self.assertEqual(test_data.status, Book.Status.DRAFT)
+
+    def test_invalid_status(self):
+        with self.assertRaises(ValidationError):
+            test_data = Book(
+                category=self.category,
+                name="Test Book",
+                author=self.author,
+                publisher="test",
+                published_at="1999-12-12",
+                price=1000,
+                description="test",
+                stock=5,
+                status="XX",
+            )
+            test_data.full_clean()
+
 
 class FavoriteToggleViewTest(TestCase):
     def setUp(self):
