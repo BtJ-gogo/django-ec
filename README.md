@@ -24,7 +24,7 @@ Django で構築した書籍販売向け Web アプリケーションです。
     - 無限スクロール(Fetch API)
   - django-widget-tweaks
 - バックエンド
-  - Django 5.2.4
+  - Django 5.2.8
   - django-allauth
   - stripe
   - Pillow
