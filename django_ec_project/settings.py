@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "widget_tweaks",
     "debug_toolbar",
+    "django_filters",
     # local
     "pages",
     "products",
