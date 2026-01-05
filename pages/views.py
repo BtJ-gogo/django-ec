@@ -3,10 +3,9 @@ from django.shortcuts import render
 from django.db.models import Count
 
 from products.models import Book
-from products.views import SearchRedirectMixin
 
 
-class HomeView(SearchRedirectMixin, View):
+class HomeView(View):
     def get(self, request, *args, **kwargs):
         context = {
             "new_books": Book.objects.all()

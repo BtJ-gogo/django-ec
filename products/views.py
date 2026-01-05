@@ -15,24 +15,7 @@ from accounts.models import Favorite
 from .forms import AddCartForm
 
 
-class SearchRedirectMixin:
-    search_param = "search"
-    search_redirect_url_name = "products:book_list"
-
-    def dispatch(self, request, *args, **kwargs):
-        search = request.GET.get(self.search_param)
-        redirect_url = (
-            f"{reverse(self.search_redirect_url_name)}?{self.search_param}={quote(search)}"
-        ) if search else None
-
-        if redirect_url and request.get_full_path() != redirect_url:
-            return redirect(redirect_url)
-
-        return super().dispatch(request, *args, **kwargs)
-
-
-
-class BookListView(SearchRedirectMixin, ListView):
+class BookListView(ListView):
     model = Book
     template_name = "book_list.html"
     paginate_by = 8
@@ -76,14 +59,12 @@ class BookListLoadView(View):
         if page > paginator.num_pages:
             return JsonResponse({"html": "", "has_next": False})
         page_obj = paginator.get_page(page)
-            
+
         html = render_to_string("book_list_items.html", {"object_list": page_obj})
-        return JsonResponse({"html": html, "has_next": page_obj.has_next()})        
+        return JsonResponse({"html": html, "has_next": page_obj.has_next()})
 
 
-
-
-class BookDetailView(SearchRedirectMixin, DetailView):
+class BookDetailView(DetailView):
     model = Book
     template_name = "book_detail.html"
     context_object_name = "book"
@@ -113,7 +94,7 @@ class BookDetailView(SearchRedirectMixin, DetailView):
         return context
 
 
-class AuthorDetailView(SearchRedirectMixin, DetailView):
+class AuthorDetailView(DetailView):
     model = Author
     template_name = "author_detail.html"
     context_object_name = "author"

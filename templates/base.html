@@ -17,7 +17,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navLinks">
-                    <form class="d-flex" method="get">
+                    <form class="d-flex" method="get" action="{% url 'products:book_list' %}">
                         <input class="form-control me-2" type="search" name="search" value="{{ request.GET.search|default:'' }}" placeholder="タイトルまたは著者名で検索" aria-label="Search">
                         <button class="btn btn-outline-light text-nowrap" type="submit">キーワード検索</button>
                     </form>

@@ -11,14 +11,13 @@ from django.contrib import messages
 from .models import ShippingAddress, Favorite
 from .forms import ShippingAddressForm
 from orders.models import Order, OrderItem
-from products.views import SearchRedirectMixin
 
 
-class MypageView(LoginRequiredMixin, SearchRedirectMixin, TemplateView):
+class MypageView(LoginRequiredMixin, TemplateView):
     template_name = "mypage.html"
 
 
-class ShippingAddressView(LoginRequiredMixin, SearchRedirectMixin, ListView):
+class ShippingAddressView(LoginRequiredMixin, ListView):
     model = ShippingAddress
     template_name = "shipping_address_list.html"
 
@@ -26,7 +25,7 @@ class ShippingAddressView(LoginRequiredMixin, SearchRedirectMixin, ListView):
         return ShippingAddress.objects.filter(user=self.request.user)
 
 
-class ShippingAddressAddView(LoginRequiredMixin, SearchRedirectMixin, CreateView):
+class ShippingAddressAddView(LoginRequiredMixin, CreateView):
     model = ShippingAddress
     template_name = "shipping_address_add.html"
     form_class = ShippingAddressForm
@@ -54,7 +53,7 @@ class ShippingAddressAddView(LoginRequiredMixin, SearchRedirectMixin, CreateView
         return super().get_success_url()
 
 
-class ShippingAddressUpdateView(LoginRequiredMixin, SearchRedirectMixin, UpdateView):
+class ShippingAddressUpdateView(LoginRequiredMixin, UpdateView):
     model = ShippingAddress
     template_name = "shipping_address_update.html"
     form_class = ShippingAddressForm
@@ -87,7 +86,7 @@ class ShippingAddressDeleteView(LoginRequiredMixin, View):
         return redirect("accounts:shipping")
 
 
-class OrderHistoryView(LoginRequiredMixin, SearchRedirectMixin, ListView):
+class OrderHistoryView(LoginRequiredMixin, ListView):
     model = Order
     template_name = "order_history.html"
 
@@ -104,7 +103,7 @@ class OrderHistoryView(LoginRequiredMixin, SearchRedirectMixin, ListView):
         )
 
 
-class OrderDetailView(LoginRequiredMixin, SearchRedirectMixin, DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "order_detail.html"
 
@@ -121,7 +120,7 @@ class OrderDetailView(LoginRequiredMixin, SearchRedirectMixin, DetailView):
         )
 
 
-class FavoriteListView(LoginRequiredMixin, SearchRedirectMixin, ListView):
+class FavoriteListView(LoginRequiredMixin, ListView):
     model = Favorite
     template_name = "favorite_list.html"
 
