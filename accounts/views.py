@@ -76,9 +76,10 @@ class ShippingAddressDeleteView(LoginRequiredMixin, View):
         del_obj = get_object_or_404(
             ShippingAddress, user=self.request.user, id=kwargs.get("pk")
         )
+        was_default = del_obj.is_default
         del_obj.delete()
 
-        if del_obj.is_default:
+        if was_default:
             obj = ShippingAddress.objects.filter(user=self.request.user).first()
             if obj:
                 obj.is_default = True
