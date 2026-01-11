@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.db import transaction
 
 from accounts.models import ShippingAddress
 from carts.models import Cart
@@ -58,6 +60,7 @@ class OrderView(LoginRequiredMixin, View):
             {"address": address, "cart_list": cart_list, "total": total},
         )
 
+    @method_decorator(transaction.atomic)
     def post(self, request, *args, **kwargs):
         success_url = request.build_absolute_uri(reverse("orders:order_completed"))
         cancel_url = request.build_absolute_uri(reverse("orders:order_canceled"))
