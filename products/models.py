@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.urls import reverse
+from django.core.validators import MinValueValidator
 
 
 class Category(models.Model):
@@ -41,7 +42,7 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.PROTECT)
     publisher = models.CharField(max_length=50)
     published_at = models.DateField(db_index=True)
-    price = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=8, decimal_places=0, validators=[MinValueValidator(0)])
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="book_image/", blank=True)
     stock = models.PositiveSmallIntegerField()
