@@ -161,6 +161,7 @@ def stripe_webhook(request):
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
     event = None
+
     try:
         event = stripe.Webhook.construct_event(
             payload,
@@ -171,6 +172,7 @@ def stripe_webhook(request):
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
         return HttpResponse(status=400)
+    
     if event.type == "checkout.session.completed":
         session = event.data.object
         if session.mode == "payment" and session.payment_status == "paid":
@@ -178,6 +180,10 @@ def stripe_webhook(request):
                 order = Order.objects.get(id=session.client_reference_id)
             except Order.DoesNotExist:
                 return HttpResponse(status=404)
+            
+            if order.payment_status == "PA":
+                return HttpResponse(status=200)
+            
             order.payment_status = "PA"
             order.stripe_id = session.payment_intent
             order.save()
