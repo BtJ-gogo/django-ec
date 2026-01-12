@@ -33,7 +33,7 @@ class Order(models.Model):
     city = models.CharField(max_length=30)
     address1 = models.CharField(max_length=50)
     address2 = models.CharField(max_length=50, blank=True)
-    total_price = models.PositiveIntegerField()
+    total_price = models.DecimalField(max_digits=8, decimal_places=0, validators=[MinValueValidator(0)])
     stripe_id = models.CharField(max_length=250, blank=True)
 
     class Meta:
