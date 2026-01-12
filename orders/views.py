@@ -72,7 +72,7 @@ class OrderView(LoginRequiredMixin, View):
             "line_items": [],
         }
 
-        cart_list = Cart.objects.filter(user=self.request.user).prefetch_related(
+        cart_list = Cart.objects.filter(user=self.request.user).select_related(
             "product"
         )
         if not cart_list.exists():
