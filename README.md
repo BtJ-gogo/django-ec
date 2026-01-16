@@ -32,7 +32,7 @@ Django で構築した書籍販売向け Web アプリケーションです。
 - データベース
   - SQLite
 - プログラミング言語
-  - Python 3.13
+  - Python 3.12
   - JavaScript (ES6+)
 
 ## ユニットテストについて
