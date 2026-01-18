@@ -13,6 +13,7 @@ from django.db import transaction
 
 from accounts.models import ShippingAddress
 from carts.models import Cart
+from products.models import Book
 from .models import Order, OrderItem
 
 
@@ -166,26 +167,41 @@ def stripe_webhook(request):
             sig_header,
             settings.STRIPE_WEBHOOK_SECRET,
         )
-    except (ValueError, stripe.error.SignatureVerificationError)  as e:
+    except (ValueError, stripe.error.SignatureVerificationError) as e:
         return HttpResponse(status=400)
     except Exception as e:
         return HttpResponse(status=400)
-    
+
     if event.type == "checkout.session.completed":
         session = event.data.object
         if session.mode == "payment" and session.payment_status == "paid":
             try:
                 order = Order.objects.get(id=session.client_reference_id)
+
+                if order.payment_status == "PA":
+                    return HttpResponse(status=200)
+
+                # 在庫を減少させる
+                order_items = OrderItem.objects.filter(order=order).select_related(
+                    "product"
+                )
+                for item in order_items:
+                    product = Book.objects.select_for_update().get(id=item.product.id)
+                    if product.stock < item.quantity:
+                        raise ValueError(
+                            f"Stock shortage for product {item.product.name}"
+                        )
+                    product.stock -= item.quantity
+                    product.save()
+
+                order.payment_status = "PA"
+                order.stripe_id = session.payment_intent
+                order.save()
+                Cart.objects.filter(user=order.user).delete()
+                request.session.pop("selected_address_id", None)
             except Order.DoesNotExist:
                 return HttpResponse(status=404)
-            
-            if order.payment_status == "PA":
-                return HttpResponse(status=200)
-            
-            order.payment_status = "PA"
-            order.stripe_id = session.payment_intent
-            order.save()
-            Cart.objects.filter(user=order.user).delete()
-            request.session.pop("selected_address_id", None)
+            except Exception as e:
+                return HttpResponse(status=500)
 
     return HttpResponse(status=200)
