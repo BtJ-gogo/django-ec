@@ -22,7 +22,7 @@ urlpatterns = [
     path("shipping/", ShippingAddressView.as_view(), name="shipping"),
     path("shipping/add/", ShippingAddressAddView.as_view(), name="shipping_add"),
     path(
-        "shipping/update/<int:pk>",
+        "shipping/update/<int:pk>/",
         ShippingAddressUpdateView.as_view(),
         name="shipping_update",
     ),
