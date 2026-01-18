@@ -50,9 +50,7 @@ class OrderView(LoginRequiredMixin, View):
             "product"
         )
         # 合計金額
-        total = 0
-        for row in cart_list:
-            total += row.get_total_price()
+        total = sum(cart.get_total_price() for cart in cart_list)
 
         return render(
             request,
