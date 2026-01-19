@@ -30,6 +30,7 @@ class AddCartView(View):
                 else:
                     # messageいれる
                     cart.quantity = book.stock
+                logger.info(f"User ID: {request.user.pk}, Action: Add, Item ID: {book.pk}, Quantity: {cart.quantity}")
                 cart.save()
 
             except Cart.DoesNotExist:
@@ -80,6 +81,7 @@ def item_delete(request, pk):
         except Cart.DoesNotExist:
             messages.warning(request, "カートのアイテムが見つかりませんでした。")
             return redirect("carts:cart")
+        logger.info(f"User ID: {request.user.pk}, Action: Remove, Item ID: {cart_item.pk}")
         messages.info(request, f"{cart_item.product.name}をカートから削除しました。")
         cart_item.delete()
 
