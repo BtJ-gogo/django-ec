@@ -1,3 +1,5 @@
+import logging
+
 from django.views import View
 from django.views.generic import ListView
 from django.shortcuts import get_object_or_404, redirect
@@ -9,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Cart
 from products.models import Book
 
+logger = logging.getLogger(__name__)
+logging.setLevel(logging.DEBUG)
 
 class AddCartView(View):
     def post(self, request, *args, **kwargs):
