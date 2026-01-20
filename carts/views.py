@@ -81,7 +81,7 @@ def item_delete(request, pk):
         except Cart.DoesNotExist:
             messages.warning(request, "カートのアイテムが見つかりませんでした。")
             return redirect("carts:cart")
-        logger.info(f"User ID: {request.user.pk}, Action: Remove, Item ID: {cart_item.pk}")
+        logger.info(f"User ID: {request.user.pk}, Action: Remove, Item ID: {cart_item.pk}, Quantity: {cart_item.quantity}")
         messages.info(request, f"{cart_item.product.name}をカートから削除しました。")
         cart_item.delete()
 
