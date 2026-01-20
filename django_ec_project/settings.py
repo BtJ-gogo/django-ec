@@ -182,3 +182,31 @@ STRIPE_WEBHOOK_SECRET = config("STRIPE_WEBHOOK_SECRET")
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False, # これを入れ忘れると既存のログが消えることがあります
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s %(process)d %(thread)d %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
