@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
 from .models import Order, OrderItem
+from products.models import Author, Book, Category
 
 
 class OrderModelTests(TestCase):
@@ -115,3 +116,89 @@ class OrderModelTests(TestCase):
         self.order.shipping_status = Order.ShippingStatus.SHIPPED
         self.order.save()
         self.assertEqual(self.order.shipping_status, "SH")
+
+
+class OrderItemModelTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        User = get_user_model()
+        cls.user = User.objects.create_user(
+            username="testuser", email="testu@test.com", password="testpass"
+        )
+        cls.category = Category.objects.create(
+            name="Test Category", slug="test-category"
+        )
+        cls.author = Author.objects.create(
+            name="Test Author",
+            kana_name="テストオーサー",
+            birth_date="2000-01-01",
+            bio="Test bio",
+        )
+        cls.book = Book.objects.create(
+            category=cls.category,
+            name="Test Book",
+            author=cls.author,
+            publisher="test",
+            published_at="1999-12-12",
+            price=1000,
+            description="test",
+            stock=5,
+            status=Book.Status.ACTIVE,
+        )
+        cls.order = Order.objects.create(
+            user=cls.user,
+            name="test name",
+            email="testu@test.com",
+            phone="1234567890",
+            zipcode="12345",
+            state="Test State",
+            city="Test City",
+            address1="1-4-2 Test Address",
+            address2="303",
+            total_price=4500,
+            stripe_id="123456789asdfas",
+        )
+        cls.order_item = OrderItem.objects.create(
+            order=cls.order,
+            product=cls.book,  # Assuming a Book instance will be assigned here
+            price=1500,
+            quantity=3,
+        )
+
+    # OrderItemが正常に作成されるか
+    def test_order_item_creation(self):
+        self.assertEqual(self.order_item.order, self.order)
+        self.assertEqual(self.order_item.product, self.book)
+        self.assertEqual(self.order_item.price, 1500)
+        self.assertEqual(self.order_item.quantity, 3)
+
+    # get_total_priceメソッドが正しい合計金額を返すか
+    def test_get_total_price(self):
+        expected_total = self.order_item.price * self.order_item.quantity
+        self.assertEqual(self.order_item.get_total_price(), expected_total)
+
+    # __str__メソッドが正しい商品名を返すか
+    def test_order_item_str(self):
+        self.assertEqual(str(self.order_item), self.book.name)
+
+    # priceが負の値の場合にバリデーションエラーが発生するか
+    def test_price_negative_validation(self):
+        order_item = OrderItem(
+            order=self.order,
+            product=self.book,
+            price=-500,
+            quantity=2,
+        )
+        with self.assertRaises(ValidationError):
+            order_item.full_clean()
+    
+    # quantityが1未満の場合にバリデーションエラーが発生するか
+    def test_quantity_below_minimum_validation(self):
+        order_item = OrderItem(
+            order=self.order,
+            product=self.book,
+            price=500,
+            quantity=0,
+        )
+        with self.assertRaises(ValidationError):
+            order_item.full_clean()
