@@ -54,8 +54,8 @@ python manage.py test
 ```bash
 
 # 仮想環境作成 & 有効化
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\Activate.ps1
 
 # 依存関係インストール
 pip install -r requirements.txt
