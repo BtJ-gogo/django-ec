@@ -5,7 +5,6 @@ from django.conf import settings
 from products.models import Book
 
 
-# Create your models here.
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Book, on_delete=models.CASCADE)
