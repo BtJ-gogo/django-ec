@@ -16,6 +16,12 @@ Django で構築した書籍販売向け Web アプリケーションです。
 - 配送先住所登録・管理
 - Django Admin による商品管理
 
+## ER 図
+
+以下は本アプリケーションの主要モデルの関係図です。
+
+![ER Diagram](docs/ER.png)
+
 ## 使用技術
 
 - フロントエンド
@@ -74,12 +80,6 @@ python manage.py runserver
 
 ![トップページ](docs/TOP_PAGE.png)
 
-
-## ER 図
-
-以下は本アプリケーションの主要モデルの関係図です。
-
-![ER Diagram](docs/ER.png)
 
 ## 画面遷移図
 
