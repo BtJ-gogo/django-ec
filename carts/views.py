@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
 
 from .models import Cart
 from products.models import Book
