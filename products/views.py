@@ -1,11 +1,8 @@
-from urllib.parse import quote
-
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.contrib import messages
 from django.http import JsonResponse
 from django.template.loader import render_to_string
