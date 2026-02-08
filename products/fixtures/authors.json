@@ -1,0 +1,102 @@
+[
+  {
+    "model": "products.author",
+    "pk": 1,
+    "fields": {
+      "name": "Taro Yamada",
+      "kana_name": "Yamada Taro",
+      "birth_date": "1980-05-12",
+      "bio": "Writes contemporary fiction."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 2,
+    "fields": {
+      "name": "Hanako Suzuki",
+      "kana_name": "Suzuki Hanako",
+      "birth_date": "1975-11-03",
+      "bio": "Specializes in mystery novels."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 3,
+    "fields": {
+      "name": "Kenji Sato",
+      "kana_name": "Sato Kenji",
+      "birth_date": "1988-02-21",
+      "bio": "Tech writer and historian."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 4,
+    "fields": {
+      "name": "Mika Tanaka",
+      "kana_name": "Tanaka Mika",
+      "birth_date": "1990-09-14",
+      "bio": "Focuses on travel and culture."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 5,
+    "fields": {
+      "name": "Daichi Ito",
+      "kana_name": "Ito Daichi",
+      "birth_date": "1982-01-07",
+      "bio": "Business and self-help author."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 6,
+    "fields": {
+      "name": "Aoi Nakamura",
+      "kana_name": "Nakamura Aoi",
+      "birth_date": "1978-06-30",
+      "bio": "Writes science and non-fiction."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 7,
+    "fields": {
+      "name": "Shun Kobayashi",
+      "kana_name": "Kobayashi Shun",
+      "birth_date": "1985-03-19",
+      "bio": "Art critic and essayist."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 8,
+    "fields": {
+      "name": "Yui Kato",
+      "kana_name": "Kato Yui",
+      "birth_date": "1992-12-25",
+      "bio": "Debut novelist in 2018."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 9,
+    "fields": {
+      "name": "Ryo Fujita",
+      "kana_name": "Fujita Ryo",
+      "birth_date": "1972-08-08",
+      "bio": "Historical fiction specialist."
+    }
+  },
+  {
+    "model": "products.author",
+    "pk": 10,
+    "fields": {
+      "name": "Saki Mori",
+      "kana_name": "Mori Saki",
+      "birth_date": "1987-04-02",
+      "bio": "Writes light novels and essays."
+    }
+  }
+]
