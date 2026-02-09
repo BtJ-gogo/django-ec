@@ -31,6 +31,10 @@ class Author(models.Model):
         if self.birth_date > timezone.now().date():
             raise ValidationError({'birth_date': 'Birth date cannot be in the future.'})
 
+class ActiveBookManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Book.Status.ACTIVE)
+
 class Book(models.Model):
     class Status(models.TextChoices):
         ACTIVE = "AC", "Active"
@@ -47,6 +51,10 @@ class Book(models.Model):
     image = models.ImageField(upload_to="book_image/", blank=True)
     stock = models.PositiveSmallIntegerField()
     status = models.CharField(max_length=2, choices=Status, default=Status.DRAFT)
+
+
+    objects = models.Manager()  # The default manager.
+    active_objects = ActiveBookManager()  # Custom manager for active books.
 
     def __str__(self):
         return self.name
