@@ -8,7 +8,7 @@ from products.models import Book
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         context = {
-            "new_books": Book.objects.all()
+            "new_books": Book.active_objects.all()
             .order_by("-published_at")
             .select_related("author")[:4],
         }

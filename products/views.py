@@ -18,7 +18,7 @@ class BookListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        book_list = Book.objects.select_related("author", "category")
+        book_list = Book.active_objects.select_related("author", "category")
 
         category = self.kwargs.get("category")
         if category:
@@ -38,7 +38,7 @@ class BookListView(ListView):
 class BookListLoadView(View):
     def get(self, request, *args, **kwargs):
         page = int(self.request.GET.get("page", 1))
-        book_list = Book.objects.select_related("author", "category")
+        book_list = Book.active_objects.select_related("author", "category")
 
         category = self.kwargs.get("category")
         if category:
@@ -67,7 +67,7 @@ class BookDetailView(DetailView):
     context_object_name = "book"
 
     def get_queryset(self):
-        return Book.objects.select_related("author", "category")
+        return Book.active_objects.select_related("author", "category")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,7 +101,7 @@ class AuthorDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        books = Book.objects.filter(author=context["author"]).select_related(
+        books = Book.active_objects.filter(author=context["author"]).select_related(
             "author", "category"
         )
         p = Paginator(books, self.paginate_by)
