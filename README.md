@@ -71,7 +71,7 @@ python manage.py migrate
 python manage.py createsuperuser
 
 # 開発サーバー起動
-python manage.py runserver
+python manage.py runserver --settings=django_ec_project.settings.settings
 ```
 
 ## 画面イメージ
