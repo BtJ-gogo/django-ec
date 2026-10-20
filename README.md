@@ -23,8 +23,6 @@ Django で構築した書籍販売向け Web アプリケーションです。
   - 商品一覧などへのアクセスなどを`select_related`/`prefetch_related`で最適化
 - トランザクション管理
   - 複数の処理のデータ整合性を保つために使用
-- テスト作成による品質確保
-  - 単体テストを作成し、データ整合性とバグ検出を効率化
 
 ## ER 図
 
@@ -51,15 +49,6 @@ Django で構築した書籍販売向け Web アプリケーションです。
   - Python 3.12
   - JavaScript (ES6+)
 
-## ユニットテストについて
-
-現在、Djangoの`unittest`を使ってモデルやビューに対してユニットテストを実装しています。  
-
-テストの実行方法：
-```bash
-python manage.py test
-```
-
 ## セットアップ方法
 
 ```bash
@@ -84,10 +73,3 @@ python manage.py runserver --settings=django_ec_project.settings.settings
 ## 画面イメージ
 
 ![トップページ](docs/TOP_PAGE.png)
-
-
-## 画面遷移図
-
-以下は本アプリケーションの画面遷移図です。
-![Screen Transition Diagram](docs/screen_transition.png)  
-※商品詳細へは買い物かご、お気に入りなど複数の画面からも遷移可能です。
